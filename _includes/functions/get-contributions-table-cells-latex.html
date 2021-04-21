@@ -1,0 +1,19 @@
+{% assign module = include.mymodule %}
+{% comment %} *** IMPORTANT (otherwise the Latex tables are easily ruined! *** {% endcomment %}
+{% comment %} This function saves the Latex cell definition for focus area contribution to "contribution_string" {% endcomment %}
+{% comment %} Only inner "&" are printed, no outer ones! {% endcomment %}
+{% if module.is_thesis %}
+    {% capture contribution_string %}\multicolumn{6}{c}{ {% t moduledescription.thesis_contribution_to_focus_areas %} }{% endcapture %}
+{% else %}
+    {% include /functions/const-focus-area-order.html %}
+    {% assign hf_acronym_list = focus_area_order | split: ";" %}
+    {% assign output_array = "" | split: ";" %}
+    {% for hf_acronym in hf_acronym_list %}
+        {% if module.ects.contributions_to_focus_areas[hf_acronym] %}
+            {% assign output_array = output_array | push: module.ects.contributions_to_focus_areas[hf_acronym].num %}
+        {% else %}
+            {% assign output_array = output_array | push: "(*)" %}
+        {% endif %}
+    {% endfor %}
+    {% assign contribution_string = output_array | join: " & " %}
+{% endif %}

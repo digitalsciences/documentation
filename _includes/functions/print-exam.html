@@ -1,0 +1,19 @@
+{% comment %} Pretty-prints the exam link for a module. {% endcomment %}
+
+{% assign exam_output_string = "" %}
+{% if include.mymodule.exam %}
+    {% include /functions/get-lang.html %}
+    {% for exam in site.data.examtypes %}
+        {% if include.mymodule.exam == exam[1].key %}
+            {% capture exam_output_string %}<a href="{{site.baseurl}}/examtypes/index.html#{{exam[1].key}}">{{ exam[1][current_language].short }}</a>{% endcapture %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if exam_output_string == "" %}
+    {% if include.mymodule.is_thesis %}
+        {% assign exam_output_string = site.translations[site.lang].moduledescription.thesis_and_colloquium %}
+    {% else %}
+        {% assign exam_output_string = site.translations[site.lang].exams.tbd %}
+    {% endif %}
+{% endif %}

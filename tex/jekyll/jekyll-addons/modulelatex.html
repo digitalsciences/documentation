@@ -1,0 +1,646 @@
+---
+layout: default-latex
+---
+
+
+{% assign modules_sorted = site.modules | where: "abstract", nil | where: "is_thesis", nil | sort: "title" %}
+
+{% comment %} make sure that Master Thesis comes last {% endcomment %}
+{% assign thesis_list = site.modules | where_exp: "mod", "mod.is_thesis"  %}
+{% assign modules_sorted = modules_sorted | concat: thesis_list %}
+
+{% assign handlungsfelder=site.handlungsfelder %}
+{% assign examtypes=site.data.examtypes | sort %}
+
+
+{% comment %}
+##########################################################################################
+# Studiengangsbeschreibung
+##########################################################################################
+{% endcomment %}
+
+\chapter{Studiengangsbeschreibung}
+
+{{ site.startpages[0].content | texify }}
+
+
+
+{% comment %}
+##########################################################################################
+# Absolvent*innenprofil
+##########################################################################################
+{% endcomment %}
+
+\chapter{Absolvent*innenprofil}
+\label{Absolventinnenprofil}
+
+Für den Studiengang wurden die Informationen zum Absolvent*innenprofil aus intensiver Praxisrecherche
+(systematische Auswertungen von Stellenanzeigen, Befragungen von Unternehmen, Praktikern und Alumni
+sowie Auswertung von Kompetenz-Standards der Informatik) gewonnen.
+
+Zunächst wird das Profil per Studienrichtung generisch definiert. Darauf aufbauend wird ein Satz
+von Absolvent*innenprofilen in Form von Personas beschrieben (prototypische Rollen, die von Absolvent*innen
+des Studiengangs in einem Organisationskontext übernommen werden können). Im Kapitel
+»\hyperref[Studienverlaufsplan]{Studienverlaufsplan}« ist für jede dieser Personas ein
+beispielhafter Curriculums-Verlauf beschrieben.
+
+Darüber hinaus lassen sich sieben Kompetenz-Cluster formulieren, die für den Studiengang
+als wesentlich angesehen werden. Diese sind ebenfalls nachfolgend dargestellt.
+
+\section{Profilbeschreibung per Studienrichtung}
+\label{Profilbeschreibung_Studienrichtungen}
+
+{% for study_program in site.studyprograms %}
+    {% assign heading = study_program.title | append: " (" | append: study_program.kuerzel | append: ")" %}
+
+    \subsection{ {{ heading }} }
+    {% assign studyprogram_competence = site.studyprogram_competences
+                | where_exp: "spc", "spc.studyprogram == study_program.kuerzel" | first %}
+    {{ studyprogram_competence.content | texify }}
+{% endfor %}}
+
+
+\section{Personas für Absolvent*innenprofile}
+\label{Personas}
+
+{% for study_program in site.studyprograms %}
+
+    Nachfolgend sind typische Absolvent*innenprofile beschrieben.
+
+    {% assign specific_personas = site.personas
+            | where_exp: "persona", "persona.program == study_program.kuerzel"
+            | sortby: "acronym" %}
+    {% for persona in specific_personas %}
+        \subsection{Absolvent*innenprofil »{{ persona.title["d"] }}« (Studienrichtung {{ persona.program }})}
+        \label{persona:{{persona.id}}:}
+
+        {{ persona.content | texify }}
+
+    {% endfor %}
+{% endfor %}
+
+
+\section{Kompetenzcluster}
+\label{Kompetenzcluster}
+
+Als Kompetenz wird die Fähigkeit bezeichnet, Wissen und Können so zu verbinden, dass berufsbezogene
+Aufgaben den Anforderungen gemäß selbstständig, eigenverantwortlich und situationsgerecht zu
+bewältigt sind.
+
+Alle Handlungsfelder dieses Studiengangs beschäftigen sich in jeweils unterschiedlicher Weise mit
+Spezifikation, Umsetzung, Betrieb und Weiterentwicklung digitaler Systeme. Daher bietet es sich an,
+die zu erwerbenden Kompetenzen gemäß eines Life-Cycle-Modells zu strukturieren. Life-Cycle-Modelle
+sind in allen Bereichen des Managements, der Organisationstheorie und der Digitalisierung allgemein
+sehr verbreitet.
+</p>
+
+Eine Kompetenz-Cluster-Struktur, die sich daran orientiert, bietet eine sinnvolle
+\textbf{orthogonale Ergänzung} zu den Handlungsfeldern, die die Studieninhalte eher nach fachlichen und
+gesellschaftlich relevanten Aspekten gliedern.
+
+Die für den Studiengang relevanten Kompetenzcluster sind nachfolgend aufgeführt.
+
+{% for competence in site.competences %}
+    \subsection{ {{ competence.title }} }}
+
+    {{ competence.content | texify }}
+{% endfor %}
+
+
+
+{% comment %}
+##########################################################################################
+# Handlungsfelder
+##########################################################################################
+{% endcomment %}
+
+\chapter{Handlungsfelder}
+\label{Handlungsfelder}
+
+Der Studiengang »Digital Sciences« will Studierende auf Führungsrollen im digitalen Wandel vorbereiten,
+indem sie als Vermittler und Motor der Digitalisierung Aufgaben an der Schnittstelle zwischen
+Technologie und Anwendung wahrnehmen. Dies beinhaltet eine technologische, eine gesellschaftlich-kulturelle
+und eine anwendungsbezogene Perspektive, die sich in sechs unterschiedlichen, nachfolgend beschriebene
+Handlungsfeldern ausprägt.
+
+{% for handlungsfeld in handlungsfelder %}
+    \section{Handlungsfeld »{{handlungsfeld.title | strip | texify }}« ({{handlungsfeld.kuerzel | upcase }})}
+    \label{handlungsfeld:{{handlungsfeld.id}}:}
+    {{ handlungsfeld.content | texify }}
+{% endfor %}
+
+
+
+{% comment %}
+##########################################################################################
+# Studienverlaufsplan
+##########################################################################################
+{% endcomment %}
+
+\chapter{Studienverlaufsplan}
+\label{Studienverlaufsplan}
+
+Die besondere Ausprägung dieses Masterstudiengangs erlaubt eine hohe Anpassbarkeit des
+Studienverlaufs an die Vorkenntnisse und Berufsziele der Absolvent*innen. Daher gibt es nicht den einen
+Studienverlaufsplan, sondern mehrere, an den \hyperref[Absolventinnenprofil]{Absolvent*innenprofilen}
+orientierte beispielhafte Studienverlaufspläne. Diese unterscheiden sich zwischen den Studienrichtungen.
+
+Jeder dieser beispielhaften Studienverlaufspläne bezieht sich auf genau ein konkretes Absolvent*innenprofil
+aus dem Kapitel "\hyperref[Absolventinnenprofil]{Absolventinnen*profile}". Sie sind nachfolgend
+tabellarisch beschrieben. Diese beispielhaften Verläufe sind ausdrücklich als Anregung für potentielle
+Bewerber*innen gedacht, sich den eigenen individuell sinnvollen Studienverlauf zusammenzustellen.
+
+
+{% for study_program in site.studyprograms %}
+    \clearpage
+    {% assign heading = study_program.title | append: " (" | append: study_program.kuerzel | append: ")" %}
+    \section{ {{ heading | texify }} }
+
+    {% assign specific_personas = site.personas
+            | where_exp: "persona", "persona.program == study_program.kuerzel"
+            | sortby: "acronym" %}
+    {% assign index_persona = 0 %}
+    {% for persona in specific_personas %}
+        {% assign index_persona = index_persona | plus: 1 %}
+        {% if index_persona > 1 and persona.modules.size == 3 %}
+            \clearpage
+        {% endif %}
+
+        \subsection{Profil \hyperref[persona:{{persona.id}}:]{»{{ persona.title["d"] }}«} ({{ study_program.kuerzel }})}
+
+        Nachfolgend ist ein typischer Studienverlauf für das Absolvent*innenprofil tabellarisch dargestellt.
+
+        \begin{center}
+        \setlength{\extrarowheight}{3pt}
+            \begin{tabular} {
+                >{\raggedright}p{0.14\textwidth}        % Term
+                p{0.12\textwidth}                       % Acronym
+                >{\raggedright}p{0.28\textwidth}        % Module
+                >{\centering}p{0.07\textwidth}   |      % ECTS
+                >{\centering}p{0.06\textwidth}          % Handlungsfeld 1..6
+                >{\centering}p{0.06\textwidth}
+                >{\centering}p{0.06\textwidth}
+                >{\centering}p{0.06\textwidth}
+                >{\centering}p{0.06\textwidth}
+                >{\centering\arraybackslash}p{0.06\textwidth}
+            }
+            \hline
+            \textbf{Fach-semester} &
+            \textbf{\foo{}{{ site.translations["de"].studyprograms.acronym }} } &
+            \textbf{\foo{}{{ site.translations["de"].studyprograms.module }} } &
+            \textbf{ECTS} &
+            {% assign index = 0 %}
+            {% for handlungsfeld in site.handlungsfelder %}
+                {% assign index = index | plus: 1 %}
+                \textbf{\hyperref[handlungsfeld:{{handlungsfeld.id}}:]{\foo{}{{ handlungsfeld.kuerzel }} } }
+                {% if index < site.handlungsfelder.size %} & {% endif %}
+            {% endfor %} \\
+            \hline \hline
+
+            {% comment %} *** VERY complicated to sum up credits in Liquid ... *** {% endcomment %}
+            {% assign all_ects = 0 %}
+            {% assign semester_ects = 0 %}
+            {% assign all_contribs = "" | split: ";" %}
+            {% assign semester_contribs = "" | split: ";" %}
+            {% for index in (0..5) %}
+                {% assign all_contribs = all_contribs | push: 0 %}
+                {% assign semester_contribs = semester_contribs | push: 0 %}
+            {% endfor %}
+
+            {% include /functions/const-focus-area-order.html %}
+            {% assign focus_areas_acronyms = focus_area_order | split: ";" %}
+
+            {% assign semester_nr = 0 %}
+            {% for semester_plan in persona.modules %}
+                {% assign semester_nr = semester_nr | plus: 1 %}
+
+                {% assign module_nr = 0 %}
+                {% for acronym in semester_plan[1] %}
+                    {% assign module_nr = module_nr | plus: 1 %}
+                    {% assign current_module = site.modules | where_exp: "mod", "mod.acronym == acronym" | first %}
+                    {% include /functions/semester-string-in-example-curriculum.html  mysemester_nr=semester_nr  mymodule_nr=module_nr  starts_in=current_module.starts_in %}
+                    {% if semester_string == "" %}
+                        {% assign semester_string = "\smallskip" %}
+                    {% endif %}
+
+                    {{ semester_string }} &
+                    {{ acronym }} &
+                    \hyperref[module:{{current_module.id}}:]{\foo{}{{ current_module.title }}} &
+                    {% include /functions/total-ects.html mymodule=current_module %}
+                    {{ total_ects }} &
+                    {% include /functions/get-contributions-table-cells-latex.html mymodule=current_module %}
+                    {{ contribution_string }} \\
+
+                    {% comment %} Calc / print a sum for each semester {% endcomment %}
+                    {% if semester_nr < persona.modules.size %}
+                    {% assign all_ects = all_ects | plus: total_ects %}
+                    {% assign semester_ects = semester_ects | plus: total_ects %}
+
+                    {% assign tmp_contribs = "" | split: ";" %}
+                    {% for index in (0..5) %}
+                        {% assign focus_areas_acronym = focus_areas_acronyms[index]  %}
+                        {% assign credits = semester_contribs[index]
+                            | plus: current_module.ects.contributions_to_focus_areas[focus_areas_acronym].num %}
+                        {% assign tmp_contribs = tmp_contribs | push: credits %}
+                    {% endfor %}
+                    {% assign semester_contribs = tmp_contribs %}
+
+                    {% if module_nr == semester_plan[1].size %}
+                        \smallskip & \smallskip &
+                        \multicolumn{1}{r}{\textbf{ {{ site.translations["de"].studyprograms.subtotal }} } } &
+                        \textbf{ {{ semester_ects }} } &
+                        {% for cell in semester_contribs %} \textbf{ {{ cell }} } & {% endfor %} \\
+                        \hline
+
+                        {% comment %} *** add the "all_contribs", reset the semester values *** {% endcomment %}
+                        {% assign semester_ects = 0 %}
+                        {% assign tmp_contribs = all_contribs %}
+                        {% assign all_contribs = "" | split: ";" %}
+                        {% for index in (0..5) %}
+                            {% assign credits = tmp_contribs[index] | plus: semester_contribs[index] %}
+                            {% assign all_contribs = all_contribs | push: credits %}
+                        {% endfor %}
+                        {% assign semester_contribs = "" | split: ";" %}
+                        {% for index in (0..5) %}{% assign semester_contribs = semester_contribs | push: 0 %}{% endfor %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        \smallskip & \smallskip &
+        \multicolumn{1}{r}{\textbf{ {{ site.translations["de"].studyprograms.total }} } } &
+        \textbf{ {{ all_ects | plus: 30 }} } &
+        {% for cell in all_contribs %} \textbf{ {{ cell }} } & {% endfor %}
+        \end{tabular}
+        \end{center}
+    {% endfor %}
+{% endfor %}
+
+
+
+{% comment %}
+##########################################################################################
+# Alternativer Studienverlaufsplan
+##########################################################################################
+{% endcomment %}
+
+\chapter{Alternativer Studienverlaufsplan}
+
+Ein alternativer Studienverlaufsplan lässt sich aus den im Kapitel
+"\hyperref[Studienverlaufsplan]{Studienverlaufsplan}" beschriebenen beispielhaften
+Studienverlaufsplänen für spezifische Absolventenprofile individuell ableiten. Aus
+der tabellarischen Darstellung ist ersichtlich, in welcher Weise der Studienverlauf beispielsweise bei einer
+besonderen Belastung (alleinerziehendes Elternteil, längerfristige Erkrankung, pflegebedürftige Angehörige, etc.)
+gestreckt werden kann.
+
+So wäre es etwa möglich, aus einem dreisemestrigen Studium ein fünfsemestriges mit etwa
+halber zeitlicher Belastung zu machen, indem man die Veranstaltungen des Sommer- und des Wintersemesters jeweils
+auf zwei Jahre verteilt (also zwei Sommer- und zwei Wintersemesterperioden dafür reserviert).
+
+
+{% comment %}
+##########################################################################################
+# Module
+##########################################################################################
+{% endcomment %}
+
+\chapter{Module}
+
+Auf den nachfolgenden Seiten werden die Module des Studiengangs detailliert beschrieben. Zur besseren
+Übersicht sei auch auf die \hyperref[Modulmatrix]{Modulmatrix} am Ende dieses Dokuments verwiesen.
+Dort befindet sich auch eine \hyperref[Prüfungsformen]{Liste mit Kurzbeschreibungen der verwendeten Prüfungsformen}.
+
+In allen Modulen verflechten die Lehrenden grundsätzlich ihre Forschungsgebiete mit der Lehre.
+Forschungs- und Innovationsthemen stehen bei einigen Modulen sogar explizit im Mittelpunkt,
+so etwa in den Seminarformaten “Computer Science Research” und “Knowledge Discovery” sowie
+den “Guided Project”-Formaten und den Projekt-Formaten.
+
+{% for module in modules_sorted %}
+    \clearpage
+    \section{Modul »{{module.title | strip | texify }}« ({{module.acronym | upcase }})}
+    \label{module:{{module.id}}:}
+
+    \begin{center}
+    \setlength{\extrarowheight}{3pt}
+    \begin{tabular}{
+        p{0.35\textwidth}
+        >{\arraybackslash}p{0.64\textwidth}
+    }
+    \hline \hline
+
+    {% include /functions/resolve-lecturer-list.html responsible=module.responsible detailed="true" %}
+    \textbf{ {% t modules.responsible.module_management.trans %}: } &
+    {{ module_mgmt_info }} \\
+    {% if lecturer_info.size > 0 %}
+        \textbf{ {% t modules.responsible.lecturers.trans %}: } &
+        {{ lecturer_info }} \\
+    {% endif %}
+
+    \textbf{ {% t modules.language.trans %}: } &
+    {% t module.language %} \\
+
+    \textbf{ {% t modules.semester.trans %}: } &
+    {% include /functions/resolve-semester.html semester=module.semester %}
+    {{ semester_string }} \\
+
+    \textbf{ {% t modules.location.trans %}: } &
+    {% t module.location %} \\
+
+    \textbf{ {% t modules.participants.trans %}: } &
+    {% include /functions/get-participants.html mymodule=module %}
+    {{ participants_info }} \\
+
+    {% assign check_precondition = module.precondition | strip_newlines %}
+    \textbf{ {% t modules.precondition.trans %}: } &
+    {% if check_precondition != "" %}
+        {{ module.precondition | texify }} \\
+    {% else %}
+        {% t moduledescription.none %} \\
+    {% endif %}
+
+    {% assign check_recommendation = module.recommendation | strip_newlines %}
+    \textbf{ {% t modules.recommendation.trans %}: } &
+    {% if check_recommendation != "" %}
+        {{ module.recommendation | texify }} \\
+    {% else %}
+        {% t moduledescription.none %} \\
+    {% endif %}
+
+    \textbf{ {% t modules.ects.trans %}: } &
+    {% include /functions/total-ects.html mymodule=module %}
+    {% if module.is_thesis %}
+        {{ total_ects }} ({{ module.is_thesis.ects_thesis }} {% t modules.is_thesis.ects_thesis.trans %}, {{ module.is_thesis.ects_colloquium }} {% t modules.is_thesis.ects_colloquium.trans %}) \\
+    {% else %}}
+        {{ total_ects }}  \\
+    {% endif %}
+
+    \textbf{ {% t modules.effort.trans %}: } &
+    {% assign total_hours = total_ects | times: 30 %}
+    {% t moduledescription.total_effort %} {{ total_hours }}h \\
+
+    {% include /functions/calc-efforts.html mymodule=module my_total_hours=total_hours %}
+    \textbf{ {% t moduledescription.contact_time %}: } &
+    {{ contact_time }}h {{ contact_time_details }} \\
+
+    \textbf{ {% t moduledescription.self_learning_time %}: } &
+    {{ selfstudy_time }}h {{ selfstudy_time_details }} \\
+
+    \textbf{ {% t modules.exam.trans %}: } &
+    {% if module.is_thesis %}
+        {% t moduledescription.thesis_and_colloquium %} \\
+    {% else %}
+        {% for exam in examtypes %}
+            {% if module.exam == exam[1].key %}
+                \hyperref[exam:{{exam[1].key}}:]{\foo{}{{ exam[1]["d"].short }}}
+            {% endif %}
+        {% endfor %} \\
+    {% endif %}}
+    \hline \hline
+
+    \end{tabular}
+    \end{center}
+
+
+    {% if module.is_thesis %}
+    {% else %}
+        \subsection{Zuordnung zu den Handlungsfeldern des Studiengangs}
+
+        Nachfolgend ist die Zuordnung des Moduls zu den Handlungsfeldern
+        des Studiengangs aufgeführt, und zwar als anteiliger Beitrag (als ECTS und inhaltlich). Dies gibt auch
+        Auskunft über die Verwendbarkeit des Moduls in anderen Studiengängen und über die Beziehung zu
+        anderen Modulen im selben Studiengang.
+
+        \begin{center}
+        \setlength{\extrarowheight}{3pt}
+        \begin{tabular}{
+            >{\raggedright}p{0.2\textwidth}
+            >{\centering}p{0.2\textwidth}
+            >{\arraybackslash}p{0.6\textwidth}
+        }
+        \hline
+        \textbf{Handlungsfeld} & \textbf{ECTS} & \textbf{Modulbeitrag zum Handlungsfeld} \\[3pt]
+        \hline
+        {% if module.ects.contributions_to_focus_areas %}
+            {% assign linklist = "" | split: "." %}
+            {% for contrib in module.ects.contributions_to_focus_areas %}
+                {% if contrib[1].num > 0 %}
+                    {% assign _acronym = contrib[0] | upcase %}
+                    {% assign _focus_area = site.handlungsfelder | where: "kuerzel", _acronym %}
+                    \hyperref[handlungsfeld:{{_focus_area[0].id}}:]{\foo{}{{ _focus_area[0].title }}}  &
+                    {{ contrib[1].num }} &
+                    {{ contrib[1].desc }} \\[3pt]
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        \end{tabular}
+        \end{center}
+        {
+    {% endif %}
+
+    {% if module.instanceof %}
+        {% comment %} This is in case of an "abstract" module providing a generic description, which is just
+        copied into any "instanceof" module. Applies e.g. to Guided Projects. {% endcomment %}
+        {% assign parent_list = site.module | where: "acronym", module.instanceof %}
+        {% if parent_list.size == 1 %}
+            {{ parent_list[0].content | texify }}
+        {% endif %}
+    {% else %}}
+        {{module.content | texify }}
+    {% endif %}
+
+{% endfor %}
+
+
+
+
+
+
+{% comment %}
+##########################################################################################
+# Modulmatrix
+##########################################################################################
+{% endcomment %}
+
+\chapter{Modulmatrix}
+\label{Modulmatrix}
+
+In der nachfolgenden Tabelle ist die Modulmatrix aufgeführt, inklusive der Vernetzung mit den Handlungsfeldern.
+Diese ist so definiert, dass jedes Modul mit einem Teil seines ECTS-Werts auf ein oder mehrere Handlungsfelder
+einzahlt. Dieser individuelle Beitrag ist aus der Tabelle ersichtlich und dann in den nachfolgenden
+Detailbeschreibungen der Module noch einmal detailliert ausgewiesen und begründet.
+
+Nachfolgend sind die Semester- und die Sprachoptionen in der Matrix kurz erklärt.
+
+
+\begin{center}
+\setlength{\extrarowheight}{3pt}
+\begin{tabular}{
+    >{\raggedright}p{0.2\textwidth}
+    p{0.03\textwidth}
+    >{\arraybackslash}p{0.75\textwidth}
+}
+\hline
+\textbf{Semester-Option} & \smallskip & \textbf{Erklärung} \\
+\hline
+{% for option in site.translations["de"].modules.semester.options %}
+    {% capture option_name %}{{option[0]}}{% endcapture %}
+    {{ site.translations["de"].modules.semester.options_latex[option_name] }} &
+    \smallskip &
+    {{ site.translations["de"].modules.semester.options_doc[option_name] }}
+    \\
+{% endfor %}
+\end{tabular}
+
+\vspace{8mm}
+
+\begin{tabular}{
+    >{\raggedright}p{0.2\textwidth}
+    p{0.03\textwidth}
+    >{\arraybackslash}p{0.75\textwidth}
+}
+\hline
+\textbf{Sprach-Option} & \smallskip & \textbf{Erklärung} \\
+\hline
+{% for option in site.translations["de"].modules.language.options %}
+    {% capture option_name %}{{option[0]}}{% endcapture %}
+    {{ site.translations["de"].modules.language.options[option_name] }} &
+    \smallskip &
+    {{ site.translations["de"].modules.language.options_doc[option_name] }}
+    \\
+{% endfor %}
+\end{tabular}
+\end{center}
+
+
+\vspace{8mm}
+
+In der nachfolgenden Tabelle sind am rechten Rand die Zuordnung der Module zu den beiden wesentlichen
+Ordnungsrahmen dieses Studiengangs eingezeichnet:
+
+\begin{itemize}
+    \item Zunächst ist der Bezug zu den \hyperref[Handlungsfelder]{Handlungsfeldern} des Studiengangs notiert.
+        Dies geschieht in Form des Beitrags (in ECTS) auf dieses Handlungsfeld. Die Begründung für den Beitrag
+        findet in der Detailbeschreibung des jeweiligen Moduls. Diese Detailbeschreibung ist in der Tabelle
+        verlinkt (über Kürzel oder Titel).
+    \item Weiter ist annotiert, welche der \hyperref[Kompetenzcluster]{Kompetenzcluster} das Modul abdeckt.
+        \textbf{Diese Einträge befinden sich gerade noch in Abstimmung mit den jeweils Lehrenden und sind daher
+            als "(*)" dargestellt.}
+\end{itemize}
+
+\newgeometry{left=5cm,right=1.5cm,top=1cm,bottom=1.5cm}
+\begin{landscape}
+\pagestyle{empty}
+\setlength{\extrarowheight}{6pt}
+%\renewcommand{\arraystretch}{5.5}
+
+\begingroup
+\begin{longtable}
+{
+    >{\centering}p{1cm}         % Modcounter
+    p{2cm}                      % Acronym
+    %***rem_exams*** >{\raggedright}p{4cm}       % Title
+    >{\raggedright}p{3.5cm}       % Title
+    >{\centering}p{1.5cm}       % ECTS
+    >{\raggedright}p{2.25cm}     % Sprache
+    >{\raggedright}p{1.75cm}     % Semester
+    >{\raggedright}p{3cm}   |   % Lehrende
+    >{\centering}p{0.75cm}      % Handlungsfeld 1..6
+    >{\centering}p{0.75cm}
+    >{\centering}p{0.75cm}
+    >{\centering}p{0.75cm}
+    >{\centering}p{0.75cm}
+    >{\centering}p{0.75cm} |
+>{\centering}p{0.75cm}
+>{\centering}p{0.75cm}
+>{\centering}p{0.75cm}
+>{\centering}p{0.75cm}
+>{\centering}p{0.75cm}
+>{\centering}p{0.75cm}
+>{\centering}p{0.75cm}
+    >{\centering}p{0.75cm}   %***rem_exams*** |
+    p{0.2cm}                    % just a blank
+    % >{\arraybackslash}p{4.5cm}  % Prüfungsform
+}
+\smallskip & \textbf{Kürzel} & \textbf{Titel} & \textbf{ECTS} & \textbf{Sprache} & \textbf{Sem.} & \textbf{Lehrende*r} &
+{% for handlungsfeld in handlungsfelder %}
+    \begin{rotate}{45}  \hyperref[handlungsfeld:{{competence.id}}:]{\foo{}{{ handlungsfeld.title }}} \end{rotate} &
+{% endfor %}
+{% for competence in site.competences %}
+    \begin{rotate}{45}  \hyperref[handlungsfeld:{{competence.id}}:]{\foo{}{{ competence.title }}} \end{rotate} &
+{% endfor %}
+
+%***rem_exams*** \smallskip &
+%***rem_exams*** \textbf{Prüfungsform} \\ \hline \hline
+
+\\ \hline \hline
+\endfirsthead
+
+\smallskip & \textbf{Kürzel} & \textbf{Titel} & \textbf{ECTS} & \textbf{Sprache} & \textbf{Sem.} & \textbf{Lehrende*r} &
+{% for handlungsfeld in handlungsfelder %}
+    \begin{rotate}{45}  \hyperref[handlungsfeld:{{competence.id}}:]{\foo{}{{ handlungsfeld.title }}} \end{rotate} &
+{% endfor %}
+{% for competence in site.competences %}
+\begin{rotate}{45}  \hyperref[handlungsfeld:{{competence.id}}:]{\foo{}{{ competence.title }}} \end{rotate} &
+{% endfor %}
+
+%***rem_exams*** \smallskip &
+%***rem_exams*** \textbf{Prüfungsform} \\ \hline \hline
+
+\\ \hline \hline
+\endhead
+
+{% assign modcounter = 0 %}
+{% for module in modules_sorted %}
+    {% assign modcounter = modcounter | plus: 1 %}
+
+    {% if modcounter == modules_sorted.size %} \hline \hline {% endif %}
+
+    ({{ modcounter }}) &
+    \hyperref[module:{{module.id}}:]{\foo{}{{ module.acronym }}} &
+    \hyperref[module:{{module.id}}:]{\foo{}{{ module.title }}} &
+
+    {% include /functions/total-ects.html mymodule=module %}
+    {{ total_ects }} &
+
+    {% t module.language %} &
+
+    {% include /functions/resolve-semester.html semester=module.semester short_version=1 %}
+    {{ semester_string }} &
+
+    {% include /functions/resolve-lecturer-list.html responsible=module.responsible %}
+    {{ lecturer_info }} &
+
+    {% include /functions/get-contributions-table-cells-latex.html mymodule=current_module %}
+    {{ contribution_string }} & (*) & (*) & (*) & (*) & (*) & (*) & (*) &
+    % \smallskip &
+
+    {% for exam in examtypes %}
+        {% if module.exam == exam[1].key %}
+            % \hyperref[exam:{{exam[1].key}}:]{\foo{}{{ exam[1]["d"].short }}}
+        {% endif %}
+    {% endfor %}
+    \\
+{% endfor %}
+
+\hline
+\end{longtable}
+\endgroup
+
+\end{landscape}
+\restoregeometry % Wieder die alten Ränder
+
+
+\clearpage
+\section{Prüfungsformen}
+\label{Prüfungsformen}
+
+Nachfolgend sind die in der Modulmatrix und den Modulbeschreibungen referenzierten Prüfungsformen jeweils kurz
+beschrieben.
+
+{% for exam in examtypes %}
+    \subsection{Prüfungsform »{{exam[1].d.short | strip }}«}
+    \label{exam:{{exam[1].key}}:}
+    {{ exam[1].d.long }}
+{% endfor %}
+
+

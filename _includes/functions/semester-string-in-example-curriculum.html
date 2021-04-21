@@ -1,0 +1,22 @@
+{% assign semester_nr = include.mysemester_nr %}
+{% assign module_nr = include.mymodule_nr %}
+{% assign starts_in = include.starts_in %}
+
+{% assign semester_string = "" %}
+{% if module_nr == 1 %}
+    {% assign semester_string = semester_nr | append: ". Semester" %}
+    {% if starts_in == "ss" %}
+        {% assign odd = " (WS)" %}
+        {% assign even = " (SS)" %}
+    {% else %}
+        {% assign odd = " (SS)" %}
+        {% assign even = " (WS)" %}
+    {% endif %}
+    {% assign mod = semester_nr | modulo: 2 %}
+    {% if mod == 1 %}
+        {% assign semester_string = semester_string | append: odd %}
+    {% else %}
+        {% assign semester_string = semester_string | append: even %}
+    {% endif %}
+{% endif %}
+

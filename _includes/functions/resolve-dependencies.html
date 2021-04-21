@@ -1,0 +1,22 @@
+{% assign parents = include.parents | split: "," %}
+{% assign this = include.this %}
+{% assign res = "" | split: "," %}
+{% assign res-items = "" | split: "," %}
+
+{% for dependent in dependents%}
+	{% for element in elements%}
+		{% assign elementClean = element.kuerzel | replace: ' ', ''  %}
+		{% assign dependentClean = dependent | replace: ' ', ''  %}
+		{% if  elementClean == dependentClean %}
+			{% assign res = res | push: element %}
+		{% endif %}
+	{% endfor %}
+{% endfor %}
+
+{% for res-item in res %}
+{% capture itemHTML %}<a href="{{site.baseurl}}{{res-item.url}}">{{ res-item.title }}</a>{% endcapture %}
+{% assign res-items = res-items | push: itemHTML %}
+{% endfor %}
+
+{{ res-items | join: ", " }}
+

@@ -1,0 +1,16 @@
+{% comment %} Resolves the semester in which a module is offered {% endcomment %}
+
+{% assign semester = include.semester %}
+{% assign short_version = include.short_version %}
+
+{% if short_version > 0 %}
+    {% assign acronym = semester | split: "." | last %}
+    {% assign semester_string = site.translations["de"].modules.semester.options_latex[acronym] %}
+{% else %}
+    {% capture semester_string %}{% t semester %}{% endcapture %}
+{% endif %}
+
+{% if semester_string.size <= 1 %}
+    {% assign semester_string = "???" %}
+{% endif %}
+

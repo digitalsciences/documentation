@@ -1,0 +1,14 @@
+{% comment %} Daten übernehmen {% endcomment %}
+{% assign kuerzel = include.kuerzel-studiengang %}
+
+
+{% comment %}------------------------------------------------------------------
+Fachsemester aufbauen
+---------------------------------------------------------------{% endcomment %}
+{% assign alle_fachsemester_prefixed = "" | split: "|" %}
+{% assign alle_fachsemester = "" | split: "|" %}
+{% for i in (1..site.data.studiengaenge[kuerzel].studiendauer) %}
+{% assign semester_id = kuerzel| append: '-' | append: i %}
+{% assign alle_fachsemester=alle_fachsemester | push: i %}
+{% assign alle_fachsemester_prefixed=alle_fachsemester_prefixed | push: semester_id %}
+{% endfor %}

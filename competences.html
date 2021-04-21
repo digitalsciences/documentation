@@ -1,0 +1,51 @@
+---
+layout: default
+---
+
+<section class="section">
+    <div class="container">
+        <div class="content">
+
+            <h1>Kompetenzen</h1>
+
+            <p>
+                Als Kompetenz wird die Fähigkeit bezeichnet, Wissen und Können so zu verbinden, dass berufsbezogene
+                Aufgaben den Anforderungen gemäß selbstständig, eigenverantwortlich und situationsgerecht zu
+                bewältigt sind.
+            </p>
+            <p>
+                Alle Handlungsfelder dieses Studiengangs beschäftigen sich in jeweils unterschiedlicher Weise mit
+                Spezifikation, Umsetzung, Betrieb und Weiterentwicklung digitaler Systeme. Daher bietet es sich an,
+                die zu erwerbenden Kompetenzen gemäß eines Life-Cycle-Modells zu strukturieren. Life-Cycle-Modelle
+                sind in allen Bereichen des Managements, der Organisationstheorie und der Digitalisierung allgemein
+                sehr verbreitet.
+            </p>
+            <p>
+                Eine Kompetenz-Cluster-Struktur, die sich daran orientiert, bietet eine sinnvolle
+                <b>orthogonale Ergänzung</b> zu den Handlungsfeldern, die die Studieninhalte eher nach fachlichen und
+                gesellschaftlich relevanten Aspekten gliedern.
+            </p>
+
+            <p>
+                Die für den Studiengang relevanten Kompetenzcluster sind nachfolgend aufgeführt.
+            </p>
+
+            <div class="toc">
+                <ol class="menu-list">
+                    {% for competence in site.competences %}
+                    <li><a href="#{{competence.acronym | slugify}}">{{ competence.title }}</a></li>
+                    {% endfor %}
+                </ol>
+            </div>
+
+
+            {% for competence in site.competences %}
+                <h3 id="{{ competence.acronym }}">{{ competence.title }}</h3>
+
+                {{ competence.content | markdownify }}
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

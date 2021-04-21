@@ -1,0 +1,10 @@
+{% assign elements = include.elements %}
+{% assign parent-id = include.parent | replace: " ", "" %}
+{% assign parent = "" %}
+
+{% for element in elements %}
+	{% if element.kuerzel == parent-id %}
+		{% assign parent = element %}
+	{% endif %}
+{% endfor %}
+

@@ -1,0 +1,10 @@
+{% assign item = include.item  %}
+{% assign parent = include.parent  %}
+
+<div class="simple-textblock">
+	<header>
+		<h2><a href="{{site.baseurl}}{{item.url}}">{{item.title}}</a></h2>
+		<p class="subtitle">{% include /functions/resolve-dependencies.html dependents=item.assigned-to parent=parent %}</p>
+	</header>
+
+</div>

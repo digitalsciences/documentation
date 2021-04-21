@@ -1,0 +1,31 @@
+---
+layout: default
+---
+
+{% assign studyprograms=site.studyprograms %}
+<section class="section">
+	<div class="container">
+		<div class="content">
+	        <h1>Studienrichtungen</h1>
+		</div>
+
+		{% include /partials/toc.html items=studyprograms %}
+	</div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<div class="content">
+
+			{% for studienrichtung in studyprograms%}
+			{% if studienrichtung.path contains '-intro.md' %}
+			{% include /partials/intro.html item=studienrichtung %}
+			{% else %}
+			{% include /partials/simple-textblock.html item=studienrichtung %}
+			{% endif %}
+			{% endfor %}
+
+		</div>
+	</div>
+</section>
+

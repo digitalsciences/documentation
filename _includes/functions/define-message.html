@@ -1,0 +1,8 @@
+{% assign ignore_list = include.module.ignore | split: ";" %}
+{% assign msgno = include.msgno %}
+{% assign msg = include.msg %}
+{% assign out_msg = Nil %}
+{% if ignore_list contains msgno %}
+{% else %}
+	{% assign out_msg = msgno | append: ": " | append: msg %}
+{% endif %}

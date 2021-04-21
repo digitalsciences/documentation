@@ -1,0 +1,9 @@
+{::nomarkdown}
+{% assign url = "../anhaenge/" | append: include.url %}
+{% assign caption = include.caption %}
+{% assign width = include.width %}
+<figure>
+	<img src="{{url}}" class="img-responsive" width="{{width}}%">
+	<figcaption>{{caption}}</figcaption>
+</figure>
+{:/}

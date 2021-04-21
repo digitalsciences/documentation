@@ -1,0 +1,10 @@
+{% assign item = include.item  %}
+{% assign parent = include.parent  %}
+
+<div id="{{item.id | slugify }}" class="simple-textblock">
+	<header>
+		<h2>{{item.title}} ({{item.kuerzel | upcase}}) <a href="{{{site.edit-base}}{{ item.path }}{{site.edit-params}}"><span class="icon"><i class="fa fa-edit"></i></span> Bearbeiten</a></h2>
+		<p class="subtitle">{% include /functions/resolve-dependencies.html dependents=item.assigned-to parent=parent %}</p>
+	</header>
+{{item.content}}
+</div>

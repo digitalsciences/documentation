@@ -1,0 +1,262 @@
+{% assign mod = include.mymodule %}
+{% assign formatting = include.formatting %}
+{% assign ignore_list = mod.ignore | split: ";" %}
+{% assign error_list = "" | split: ";" %}
+{% assign warn_list = "" | split: ";" %}
+{% assign info_list = "" | split: ";" %}
+
+{% capture red_flag %}<img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-red.png" alt="Fehler">{% endcapture %}
+{% capture yellow_flag %}<img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-yellow.png" alt="Warnung">{% endcapture %}
+{% capture blue_flag %}<img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-blue.png" alt="Info">{% endcapture %}
+{% capture green_flag %}<img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-green.png" alt="alles ok">{% endcapture %}
+{% assign err_warn_flags = "" %}
+
+{% comment %} ----- Professor defined? (00) ------------ {% endcomment %}
+{% if site.data.people[mod.responsible.module_management] %}
+{% else %}
+	{% include /functions/define-message.html module=mod msgno="E001" msg="Verantwortlich Lehrender nicht gesetzt oder unbekannt." %}
+	{% if out_msg %}
+		{% assign error_list = error_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+{% comment %} ----------- Status (01) ------------ {% endcomment %}
+{% if mod.status != "modules.status.options.ok" %}
+
+{% comment %} ----------- Error-Status ------------ {% endcomment %}
+	{% if mod.status == nil %}
+		{% include /functions/define-message.html module=mod msgno="E010" msg="Status des Moduls undefiniert" %}
+		{% if out_msg %}
+			{% assign error_list = error_list | push: out_msg %}
+		{% endif %}
+	{% elsif mod.status == "modules.status.options.required" %}
+		{% assign message = "Status des Moduls noch im Zustand '"
+			| append: site.translations[site.lang].modules.status.options_doc.required
+			| append: "'" %}
+		{% include /functions/define-message.html module=mod msgno="E010" msg=message %}
+		{% if out_msg %}
+			{% assign error_list = error_list | push: out_msg %}
+		{% endif %}
+	{% elsif mod.status == "modules.status.options.lo_nok" %}
+		{% assign message = "Status des Moduls noch im Zustand '"
+			| append: site.translations[site.lang].modules.status.options_doc.lo_nok
+			| append: "'" %}
+		{% include /functions/define-message.html module=mod msgno="E011" msg=message %}
+		{% if out_msg %}
+			{% assign error_list = error_list | push: out_msg %}
+		{% endif %}
+
+{% comment %} ----------- Warning-Status ------------ {% endcomment %}
+	{% elsif mod.status == "modules.status.options.in_discussion" %}
+		{% assign message = "Status des Moduls noch im Zustand '"
+			| append: site.translations[site.lang].modules.status.options_doc.in_discussion
+			| append: "'" %}
+		{% include /functions/define-message.html module=mod msgno="W010" msg=message %}
+		{% if out_msg %}
+			{% assign warn_list = warn_list | push: out_msg %}
+		{% endif %}
+	{% elsif mod.status == "modules.status.options.lo_ok_but_wrong_format" %}
+		{% assign message = "Status des Moduls noch im Zustand '"
+			| append: site.translations[site.lang].modules.status.options_doc.lo_ok_but_wrong_format
+			| append: "'" %}
+		{% include /functions/define-message.html module=mod msgno="W011" msg=message%}
+		{% if out_msg %}
+			{% assign warn_list = warn_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+{% endif %}
+
+
+{% comment %} --------- Language? (02) ------------ {% endcomment %}
+{% assign options = site.translations["de"].modules.language.options %}
+{% include /functions/test-module-option.html param=mod.language options_category=options category_name="language" %}
+{% if is_ok != true %}
+	{% include /functions/define-message.html module=mod msgno="W020" msg="Sprache des Moduls ist nicht definiert." %}
+	{% if out_msg %}
+		{% assign warn_list = warn_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+{% comment %} --------- Location? (03) ------------ {% endcomment %}
+{% assign options = site.translations["de"].modules.location.options %}
+{% include /functions/test-module-option.html param=mod.location options_category=options category_name="location" %}
+{% if is_ok != true %}
+	{% include /functions/define-message.html module=mod msgno="W030" msg="Ort, an dem das Modul stattfindet, ist undefiniert." %}
+	{% if out_msg %}
+		{% assign warn_list = warn_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+{% comment %} --------- Participants? (04) ------------ {% endcomment %}
+{% if mod.participants.min %}
+	{% if mod.participants.min < 1 %}
+		{% include /functions/define-message.html module=mod msgno="E040" msg="Es ist eine minimale Teilnehmer*innen-Zahl < 1 angegeben." %}
+		{% if out_msg %}
+			{% assign error_list = error_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+{% else %}
+	{% include /functions/define-message.html module=mod msgno="I041" msg="Es ist keine minimale Teilnehmer*innen-Zahl definiert. Das heißt, dass das Modul auch mit 1 Teilnehmer*in stattfinden wird. Ist das so gewünscht?" %}
+	{% if out_msg %}
+		{% assign info_list = info_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+{% if mod.participants.max %}
+	{% if mod.participants.min < 1 %}
+		{% include /functions/define-message.html module=mod msgno="E041" msg="Es ist eine maximale Teilnehmer*innen-Zahl < 1 angegeben." %}
+		{% if out_msg %}
+			{% assign error_list = error_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+	{% if mod.participants.min %}
+		{% if mod.participants.max < mod.participants.min %}
+			{% include /functions/define-message.html module=mod msgno="E042" msg="Maximale Teilnehmer*innen-Zahl ist kleiner als die minimale." %}
+			{% if out_msg %}
+				{% assign error_list = error_list | push: out_msg %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% else %}
+	{% include /functions/define-message.html module=mod msgno="I042" msg="Es ist keine maximale Teilnehmer*innen-Zahl definiert. Das heißt, dass für das Modul alle Bewerber*innen akzeptiert werden, egal wie voll dann der Kurs wird. Ist das so gewünscht?" %}
+	{% if out_msg %}
+		{% assign info_list = info_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+
+
+{% comment %} --------- Total ECTS? (05) ------------ {% endcomment %}
+{% include /functions/total-ects.html mymodule=mod %}
+{% if total_ects == site.translations[site.lang].global.tbd %}
+	{% include /functions/define-message.html module=mod msgno="E050" msg="Die ECTS-Zahlen, mit denen das Modul zu den Handlungsfeldern beiträgt, sind noch nicht definiert. Damit ist das Modul für Studierende nicht wählbar." %}
+	{% if out_msg %}
+		{% assign error_list = error_list | push: out_msg %}
+	{% endif %}
+{% elsif total_ects <= 0 %}
+	{% include /functions/define-message.html module=mod msgno="E051" msg="Die ECTS-Zahlen, mit denen das Modul zu den Handlungsfeldern beiträgt, sind in der Summe bei 0. Damit ist das Modul für Studierende nicht wählbar." %}
+	{% if out_msg %}
+		{% assign error_list = error_list | push: out_msg %}
+	{% endif %}
+{% elsif total_ects < 3 %}
+	{% include /functions/define-message.html module=mod msgno="E052" msg="Das Modul hat weniger als 3 ECTS. Das ist im Studiengang nicht vorgesehen (wird in der SK1 vermutlich nicht durchkommen)." %}
+	{% if out_msg %}
+		{% assign error_list = error_list | push: out_msg %}
+	{% endif %}
+{% else %}
+	{% if total_ects < 6 %}
+		{% include /functions/define-message.html module=mod msgno="I050" msg="Das Modul hat weniger als 6 ECTS - ist das so gewünscht?" %}
+		{% if out_msg %}
+			{% assign info_list = info_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+	{% assign remainder = total_ects | modulo: 3 %}
+	{% if remainder > 0 %}
+		{% include /functions/define-message.html module=mod msgno="I051" msg="ECTS-Zahl des Moduls ist kein Vielfaches von 3. Ist das so gewünscht?" %}
+		{% if out_msg %}
+			{% assign info_list = info_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+{% endif %}
+
+
+{% comment %} --------- Exams? (06) ------------ {% endcomment %}
+{% include /functions/print-exam.html mymodule=mod %}
+{% if exam_output_string == site.translations[site.lang].exams.tbd %}
+	{% include /functions/define-message.html module=mod msgno="W060" msg="Noch keine Prüfungsform(en) für das Modul angegeben, oder die angegebene(n) Prüfungsform(en) existieren nicht. Bitte korrigieren oder unter _data/examtypes anlegen." %}
+	{% if out_msg %}
+		{% assign warn_list = warn_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+{% if exam_output_string == site.translations[site.lang].exams.unclear %}
+	{% include /functions/define-message.html module=mod msgno="W061" msg="Die angegebene(n) Prüfungsform(en) für das Modul existieren nicht - bitte korrigieren oder unter _data/examtypes anlegen." %}
+	{% if out_msg %}
+		{% assign warn_list = warn_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+{% comment %} --------- Effort? (07) ------------ {% endcomment %}
+{% if mod.effort %}
+	{% assign total_effort = 0 %}
+	{% for effort_category in mod.effort %}
+		{% assign total_effort = total_effort | plus: effort_category[1] %}
+	{% endfor %}
+	{% if total_effort <= 0 %}
+		{% include /functions/define-message.html module=mod msgno="W070" msg="Es sind nur Aufwände von 0h für das Modul angegeben; damit gibt es für die Studierenden keine Informationen zu Kontaktzeiten etc." %}
+		{% if out_msg %}
+			{% assign warn_list = warn_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+{% else %}
+	{% include /functions/define-message.html module=mod msgno="W071" msg="Es sind keine Aufwände für das Modul angegeben; damit gibt es für die Studierenden keine Informationen zu Kontaktzeiten etc." %}
+	{% if out_msg %}
+		{% assign warn_list = warn_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+{% comment %} --------- Learning Outcome? (08) ------------ {% endcomment %}
+{% if mod.content contains "als Template - nur als Vorschlag" %}
+	{% include /functions/define-message.html module=mod msgno="E080" msg="Es scheint, als wäre das Learning Outcome und die weitere inhaltliche Beschreibung für das Modul noch nicht definiert." %}
+	{% if out_msg %}
+		{% assign error_list = error_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+{% if mod.content contains "..." or mod.content contains "tbd" or mod.content contains "todo" or mod.content contains "TODO" or mod.content contains "fixme" or mod.content contains "FIXME" %}
+	{% include /functions/define-message.html module=mod msgno="I080" msg="Es scheint, als enthielte die Modulbeschreibung noch offene Punkte ('tbd.', 'todo', 'fixme', '...' etc.)." %}
+	{% if out_msg %}
+		{% assign info_list = info_list | push: out_msg %}
+	{% endif %}
+{% endif %}
+
+{% comment %} --------- ECTS Contributions? (09) ------------ {% endcomment %}
+{% if mod.ects.contributions_to_focus_areas.bss %}
+	{% include /functions/define-message.html module=mod msgno="E090" msg="Es gibt noch eine BSS-Angabe bei den ECTS-Beiträgen zu Handlungsfeldern. Dieses Handlungsfeld (war mal 'Business, Science, and Society') gibt es nicht mehr. Bitte auf andere Handlungsfelder aufteilen." %}
+	{% assign error_list = error_list | push: out_msg %}
+{% endif %}
+{% for contrib in mod.ects.contributions_to_focus_areas %}
+	{% if contrib[1].num > 0 %}
+		{% if contrib[1].desc %}
+		{% else %}
+			{% assign contrib_msg = "Bei Handlungsfeld " | append: contrib[0] | append: " sind >0 ECTS angegeben, aber keine Beschreibung, in welcher Weise das Modul dort beiträgt." %}
+			{% include /functions/define-message.html module=mod msgno="W090" msg=contrib_msg %}
+			{% assign warn_list = warn_list | push: out_msg %}
+		{% endif %}
+	{% endif %}
+{% endfor %}
+
+
+{% if formatting == "csv" %}
+	{% comment %} Just show the number of errors, warnings, infos {% endcomment %}
+	{% assign err_warn_flags = error_list.size | append: ";" | append: warn_list.size | append: ";" | append: info_list.size  %}
+
+{% elsif formatting == "short" %}
+	{% if error_list.size > 0 %}
+		{% assign err_warn_flags = red_flag %}
+	{% elsif warn_list.size > 0 %}
+		{% assign err_warn_flags = yellow_flag %}
+	{% elsif info_list.size > 0 %}
+		{% assign err_warn_flags = blue_flag %}
+	{% else %}
+		{% assign err_warn_flags = green_flag %}
+	{% endif %}
+
+{% elsif formatting == "long" %}
+	{% if error_list.size > 0 or warn_list.size > 0 or info_list.size > 0 %}
+		{% assign err_warn_flags = err_warn_flags | append: "<table><thead><tr><td></td><td>Typ</td><td>Text</td></tr></thead>" %}
+		{% for error in error_list %}
+			{% assign err_warn_flags = err_warn_flags | append: "<tr><td>" | append: red_flag | append: "</td>" %}
+			{% assign err_warn_flags = err_warn_flags | append: "<td>" | append: site.translations[site.lang].global.error | append: "</td>" %}
+			{% assign err_warn_flags = err_warn_flags | append: "<td>" | append: error | append: "</td></tr>" %}
+		{% endfor %}
+		{% for warning in warn_list %}
+			{% assign err_warn_flags = err_warn_flags | append: "<tr><td>" | append: yellow_flag | append: "</td>" %}
+			{% assign err_warn_flags = err_warn_flags | append: "<td>" | append: site.translations[site.lang].global.warning | append: "</td>" %}
+			{% assign err_warn_flags = err_warn_flags | append: "<td>" | append: warning | append: "</td></tr>" %}
+		{% endfor %}
+		{% for info in info_list %}
+		{% assign err_warn_flags = err_warn_flags | append: "<tr><td>" | append: blue_flag | append: "</td>" %}
+			{% assign err_warn_flags = err_warn_flags | append: "<td>" | append: site.translations[site.lang].global.info | append: "</td>" %}
+			{% assign err_warn_flags = err_warn_flags | append: "<td>" | append: info | append: "</td></tr>" %}
+		{% endfor %}
+		{% assign err_warn_flags = err_warn_flags | append: "</table>" %}
+	{% endif %}
+{% endif %}

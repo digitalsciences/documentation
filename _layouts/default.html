@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description
+    }}</title>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <meta charset="utf-8">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css"/>
+  <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}"
+        href="{{ site.baseurl }}/feed.xml"/>
+  <link rel="icon" type="image/vnd.microsoft.icon" href="/favicon.ico">
+  <style>
+    .branded_header_row {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+
+<section class="hero is-primary">
+  <!-- Hero header: will stick at the top -->
+  <div class="hero-head">
+    <header class="nav">
+      <div class="container">
+        <div class="nav-left">
+          {% capture link_de %}{{site.baseurl_root }}{{site.translations[site.lang].branding.switch_to_de}}{{page.url}}{% endcapture %}
+          <a href="{{link_de}}" class="nav-item">
+            <img src="{{site.baseurl_absolute}}/anhaenge/bilder/germany-flag-icon-32.png" alt="Deutsche Version"> &nbsp;
+          </a>
+          {% capture link_en %}{{site.baseurl_root}}{{site.translations[site.lang].branding.switch_to_en}}{{page.url}}{% endcapture %}
+          <a href="{{link_en}}" class="nav-item">
+            <img src="{{site.baseurl_absolute}}/anhaenge/bilder/united-kingdom-flag-icon-32.png" alt="English Version"> &nbsp;
+          </a>
+        </div>
+        <span class="nav-toggle">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+
+        <div class="nav-right nav-menu">
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/index.html">Home</a>
+          <!--
+          {% include /functions/get-lang.html %}
+          {% assign prefix = current_language | append: "bis" %}
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/{{ prefix }}/studyprograms/business-information-systems/index.html">BIS</a>
+          {% assign prefix = current_language | append: "dis" %}
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/{{ prefix }}/studyprograms/data-and-information-science/index.html">DIS</a>
+          {% assign prefix = current_language | append: "itm" %}
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/{{ prefix }}/studyprograms/it-management/index.html">ITM</a>
+          {% assign prefix = current_language | append: "sar" %}
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/{{ prefix }}/studyprograms/software-architecture/index.html">SAR</a>
+          -->
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/studyprograms/business-information-systems/index.html">BIS</a>
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/studyprograms/data-and-information-science/index.html">DIS</a>
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/studyprograms/it-management/index.html">ITM</a>
+          <a class="nav-item" href="{{ site.baseurl_absolute }}/studyprograms/software-architecture/index.html">SAR</a>
+
+          <a class="nav-item" href="{{ site.baseurl }}/handlungsfelder/index.html">{% t main_menu.focus_areas %}</a>
+          <a class="nav-item" href="{{ site.baseurl }}/competences/index.html">Kompetenzen</a>
+          <a class="nav-item" href="{{ site.baseurl }}/modules/index.html">{% t main_menu.modules %}</a>
+          <a class="nav-item" href="{{ site.baseurl }}/examtypes/index.html">{% t main_menu.exam_types %}</a>
+          <a class="nav-item" href="{{ site.baseurl }}/dozenten/index.html">{% t main_menu.lecturers %}</a>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+
+  <div class="hero-body">
+    <div class="container" style="position:relative;width:80%">
+      <div style="position:absolute;top:0px;right:0%;float:right;z-index:99">
+        <img src="{{site.baseurl_absolute}}/anhaenge/bilder/th-koeln-logo-bgwhite.png" alt="TH Köln" width="90">
+      </div>
+      <h1 class="title" style="position:relative;width:80%;top:0px">
+        <a href="{{ site.baseurl_absolute }}/">{% t branding.header_title %}</a>
+      </h1>
+      <h2 class="subtitle" style="position:relative">
+        {% t branding.header_subtitle %}
+      </h2>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <!--div class="hero-foot">
+    <nav class="tabs is-boxed is-fullwidth">
+      <div class="container">
+        <ul>
+          <li class="is-active"><a>Overview</a></li>
+          <li><a>Modifiers</a></li>
+          <li><a>Grid</a></li>
+          <li><a>Elements</a></li>
+          <li><a>Components</a></li>
+          <li><a>Layout</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div-->
+</section>
+
+{{ content }}
+
+<footer class="footer is-non-print">
+  <div class="container">
+    <ul class="menu-list">
+      <li><a href="{{ site.baseurl }}/content-developer-documentation/">{% t footer.content-developer-documentation %}</a></li>
+      <li><a href="https://git.st.archi-lab.io/master/master-digital-science">{% t footer.repo %}</a></li>
+      <li><a href="https://www.th-koeln.de/hochschule/impressum_8159.php">{% t footer.imprint %}</a></li>
+      <li><a href="https://www.th-koeln.de/hochschule/haftungshinweis_8277.php">{% t footer.disclaimer %}</a></li>
+      <li><a href="https://www.th-koeln.de/hochschule/datenschutzhinweis_8279.php">{% t footer.privacy %}</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!--div class="wrapper-footer">
+    <div class="container">
+      <footer class="footer">
+        {% include svg-icons.html %}
+      </footer>
+    </div>
+  </div-->
+<script type="text/javascript" src="{{ site.baseurl }}/cc.js"></script>
+
+</body>
+
+</html>

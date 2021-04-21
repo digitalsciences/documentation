@@ -1,0 +1,9 @@
+{% assign items = include.items  %}
+
+<div class="toc">
+	<ol class="menu-list">
+		{% for item in items %}
+		<li><a href="#{{item.id | slugify}}">{{item.title}}</a></li>
+		{% endfor %}
+	</ol>
+</div>

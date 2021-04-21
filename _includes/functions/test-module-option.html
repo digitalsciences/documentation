@@ -1,0 +1,13 @@
+{% assign param = include.param %}
+{% assign options_category = include.options_category %}
+{% assign category_name = include.category_name %}
+{% assign all_options = "" | split: ";" %}
+{% for option in options_category %}
+	{% assign full_option = "modules." | append: category_name | append: ".options." | append: option[0]  %}
+	{% assign all_options = all_options | push: full_option %}
+{% endfor %}
+{% if all_options contains param %}
+	{% assign is_ok = true %}
+{% else %}
+	{% assign is_ok = param %}
+{% endif %}

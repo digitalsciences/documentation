@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+{% assign sorted_exams=site.data.examtypes | sort: key %}
+
+<section class="section">
+  <div class="container">
+    <div class="content">
+      <h1>{% t exams.examtypes %}</h1>
+      <p>
+        {% t exams.explanation %}
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="content is-tab-wrap">
+      <table class="table is-tab-content">
+        <thead>
+        <tr>
+          <th width="10%">{% t exams.acronym %}</th>
+          <th width="20%">{% t exams.form %}</th>
+          <th width="70%">{% t exams.description %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include /functions/get-lang.html %}
+        {% for exam in sorted_exams %}
+          <tr id="{{exam[1].key}}" title="{{exam[1].key}}">
+            <td>
+              <i>{{ exam[1].key }}</i>
+            </td>
+            <td>
+              <strong>{{ exam[1][current_language].short }}</strong>
+            </td>
+            <td>
+              {{ exam[1][current_language].long }}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

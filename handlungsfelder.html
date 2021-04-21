@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+{% assign handlungsfelder=site.handlungsfelder | sort: "position_in_list" %}
+<section class="section">
+	<div class="container">
+		<div class="content">
+	        <h1>Handlungsfelder</h1>
+		</div>
+
+		{% include /partials/toc.html items=handlungsfelder %}
+	</div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<div class="content">
+
+			<div class="simple-textblock">
+				<img src="{{site.baseurl_absolute}}/anhaenge/bilder/handlungsfelder-master.png"
+					 alt="Die Handlungsfelder des Masters" width="600">
+			</div>
+
+			{% for handlungsfeld in handlungsfelder%}
+				{% include /partials/simple-textblock.html item=handlungsfeld %}
+			{% endfor %}
+
+		</div>
+	</div>
+</section>
+

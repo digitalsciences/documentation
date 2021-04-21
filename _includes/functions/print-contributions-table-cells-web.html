@@ -1,0 +1,17 @@
+{% assign module = include.mymodule %}
+
+{% if module.is_thesis %}
+    <td colspan="6">{% t moduledescription.thesis_contribution_to_focus_areas %}</td>
+{% else %}
+    {% include /functions/const-focus-area-order.html %}
+    {% assign hf_acronym_list = focus_area_order | split: ";" %}
+    {% for hf_acronym in hf_acronym_list %}
+    <td>
+        {% if module.ects.contributions_to_focus_areas[hf_acronym] %}
+            {{ module.ects.contributions_to_focus_areas[hf_acronym].num }}
+        {% else %}
+            (*)
+        {% endif %}
+    </td>
+    {% endfor %}
+{% endif %}

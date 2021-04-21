@@ -1,0 +1,55 @@
+{% assign module = include.mymodule %}
+{% assign total_hours = include.my_total_hours %}
+
+{% assign contact_time_details = "" %}
+{% assign contact_time = 0 %}
+{% assign contact_elements = '' | split: ";" %}
+{% if module.effort.lecture > 0 %}
+    {% assign element = module.effort.lecture | append: "h " |
+            append: site.translations[site.lang].modules.effort.lecture.trans | split: ';' %}
+    {% assign contact_elements = contact_elements | concat: element  %}
+    {% assign contact_time = contact_time | plus: module.effort.lecture %}
+{% endif %}
+
+{% if module.effort.seminar > 0 %}
+    {% assign element = module.effort.seminar | append: "h " |
+            append: site.translations[site.lang].modules.effort.seminar.trans | split: ';' %}
+    {% assign contact_elements = contact_elements | concat: element  %}
+    {% assign contact_time = contact_time | plus: module.effort.seminar %}
+{% endif %}
+
+{% if module.effort.exercise > 0 %}
+    {% assign element = module.effort.exercise | append: "h " |
+            append: site.translations[site.lang].modules.effort.exercise.trans | split: ';' %}
+    {% assign contact_elements = contact_elements | concat: element  %}
+    {% assign contact_time = contact_time | plus: module.effort.exercise %}
+{% endif %}
+
+{% if module.effort.practical > 0 %}
+    {% assign element = module.effort.practical | append: "h " |
+            append: site.translations[site.lang].modules.effort.practical.trans | split: ';' %}
+    {% assign contact_elements = contact_elements | concat: element  %}
+    {% assign contact_time = contact_time | plus: module.effort.practical %}
+{% endif %}
+
+{% if module.effort.project_supervision > 0 %}
+    {% assign element = module.effort.project_supervision | append: "h " |
+            append: site.translations[site.lang].modules.effort.project_supervision.trans | split: ';' %}
+    {% assign contact_elements = contact_elements | concat: element  %}
+    {% assign contact_time = contact_time | plus: module.effort.project_supervision %}
+{% endif %}
+
+{% if contact_time > 0 %}
+    {% assign contact_time_details = contact_elements | join: " / " %}
+    {% assign contact_time_details = "(" | append: contact_time_details | append: ")" %}
+{% endif %}
+
+
+{% assign selfstudy_time_details = "" %}
+{% assign selfstudy_time = total_hours | minus: contact_time %}
+{% if module.effort.project_work > 0 %}
+    {% assign selfstudy_time_details = "(" 
+            | append: site.translations[site.lang].moduledescription.containing 
+            | append: " " | append: module.effort.project_work | append: "h " 
+            | append: site.translations[site.lang].modules.effort.project_work.trans | append: ")" %}
+{% endif %}

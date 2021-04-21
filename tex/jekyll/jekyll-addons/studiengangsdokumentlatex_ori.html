@@ -1,0 +1,37 @@
+---
+layout: default-latex
+---
+
+
+{% assign chapters = "" | split: "," %}
+{% assign last_chapter = "" %}
+{% assign docs = site.selbstbericht | sort:'path' %}
+
+
+{% for doc in docs %}
+{% assign path = doc.path | remove_first:'_selbstbericht/' | split:'/' %}
+{% assign subpath = '_selbstbericht/' | append: path.first %}
+
+{% if subpath != last_chapter %}
+{% assign chapters=chapters|push:subpath %}
+{% assign last_chapter = subpath %}
+{% endif %}
+{% endfor %}
+
+
+
+  {% for chapter in chapters %}
+  {% assign subchapters = "" | split: "," %}
+  {% for doc in docs %}
+  {% if doc.path contains chapter %}
+  {% assign subchapters = subchapters|push:doc %}
+  {% endif %}
+  {% endfor %}
+
+  {% assign count = 0 %}
+  {% assign doc = subchapters | first %}
+
+\chapter{ {{ doc.title | texify }} }
+{{doc.content | headlevelup | texify }}
+
+{% endfor %}

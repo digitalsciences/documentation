@@ -1,0 +1,115 @@
+---
+layout: default
+---
+
+{% assign handlungsfelder=site.handlungsfelder | sort: "position_in_list" %}
+
+<section class="section">
+  <div class="container">
+    <div class="content">
+
+
+      <h1>Module</h1>
+
+      <p> {% t global.module_list_disclaimer %} {% t global.reference_contact_list %}  </p>
+      <p>
+          Als temporäre Lösung kann die aktuelle Modulliste
+          <a target="_blank" type="application/csv" charset="UTF-8" href="{{site.baseurl}}/modules.csv">hier als Excel (CSV) heruntergeladen werden</a>,
+          um weitere Analysen zu machen.
+      </p>
+
+      {% if site.developer %}
+          <p>
+              Momentan werden die Modulbeschreibungen (wie auch andere Inhalte) stark überarbeitet. Daher läuft diese Site im
+              "Developer"-Modus und zeigt mehr Informationen an als zu einem späteren Zeitpunkt, wenn sie als Informationssystem
+              für den Master dienen wird. Insbesondere enthält die Modul-Tabelle Informationen zum Status der Module. Der Farbcode
+              ist wie folgt. (Details finden sich beim Klicken auf das jeweilige Modul.)
+          </p>
+          <p>
+              <table style="width:50%"><tr>
+                  <td><img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-red.png" alt="Fehler">&nbsp;{% t global.error %}</td>
+                  <td><img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-yellow.png" alt="Fehler">&nbsp;{% t global.warning %}</td>
+                  <td><img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-blue.png" alt="Fehler">&nbsp;{% t global.info %}</td>
+                  <td><img src="{{site.baseurl_absolute}}/anhaenge/bilder/circle-16-green.png" alt="Fehler">&nbsp;{% t global.ok %}</td>
+              </tr><table>
+          </p>
+      {% endif %}
+
+      <table>
+        <thead>
+           <tr>
+            {% if site.developer %}
+               <th colspan="8">&nbsp;&nbsp; </th>
+            {% else %}
+               <th colspan="7">&nbsp;&nbsp; </th>
+            {% endif %}
+            <th colspan="6">{% t moduledescription.contribution_to_focus_areas_header %}</th>
+            <!-- <td width="15%">&nbsp;</td> -->
+          </tr>
+          <tr>
+            <th>&nbsp;</th>
+            <th>{% t modules.acronym.trans %}</th>
+            <th>{% t modules.title.trans %}</th>
+            <th>{% t modules.ects.trans %}</th>
+            <th>{% t modules.language.trans %}</th>
+            <th>{% t modules.semester.trans %}</th>
+            {% if site.developer %}<td>{% t modules.status.trans %}</td>{% endif %}
+            <th>{% t modules.responsible.trans %}</th>
+            {% for handlungsfeld in handlungsfelder %}
+                <th><a href="{{site.baseurl}}/handlungsfelder/#{{ handlungsfeld.id | slugify }}">
+                                  {{ handlungsfeld.kuerzel | upcase }}</a></th>
+            {% endfor %}
+            <!-- <td>{% t modules.exam.trans %}</td> -->
+          </tr>
+        </thead>
+        {% assign modcounter = 0 %}
+        {% assign modules_sorted = site.modules | where: "abstract", nil | where: "is_thesis", nil | sort: "title" %}
+
+        {% comment %} make sure that Master Thesis comes last {% endcomment %}
+        {% assign thesis_list = site.modules | where_exp: "mod", "mod.is_thesis"  %}
+        {% assign modules_sorted = modules_sorted | concat: thesis_list %}
+
+        {% for module in modules_sorted %}
+            {% assign modcounter = modcounter | plus: 1 %}
+            {% if module.is_thesis %}  <tr><td colspan="13" bgcolor="7f7f7f"></td></tr> {% endif %}
+
+             <tr>
+              <td>{{ modcounter }}</td>
+
+              <td>{{ module.acronym }}</td>
+              <td><a href="{{site.baseurl}}/{{module.url}}">{{module.title}}</a></td>
+
+              <!-- Gesamt-ECTS = Summe der Beiträge -->
+              {% include /functions/total-ects.html mymodule=module %}
+              <td>{{ total_ects }}</td>
+
+              <!-- Sprache -->
+              <td>{% t module.language %}</td>
+
+              <!-- Semester -->
+              {% include /functions/resolve-semester.html semester=module.semester %}
+              <td>{{ semester_string }}</td>
+
+              <!-- Status -->
+              {% if site.developer %}
+                  {% include /functions/find-module-errors.html mymodule=module formatting="short" %}
+                  <td>{{ err_warn_flags }}</td>
+              {% endif %}
+
+              <!-- verantwortlich -->
+              {% include /functions/resolve-lecturer-list.html responsible=module.responsible %}
+              <td>{{ lecturer_info }}</td>
+
+              <!-- Beiträge zu den Handlungsfeldern -->
+              {% include /functions/print-contributions-table-cells-web.html mymodule=module %}
+
+                <!-- Prüfungsformen -->
+              {% include /functions/print-exam.html mymodule=module %}
+              <!-- <td>{{ exam_output_string }}</td> -->
+            </tr>
+        {% endfor %}
+      </table>
+
+    </div>
+  </div>
+</section>

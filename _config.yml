@@ -1,0 +1,143 @@
+#
+# This file contains configuration flags to customize your site
+#
+
+# Name of your site (displayed in the header)
+name: Master Digital Sciences
+
+# Short bio or description (displayed in the header)
+description: Dokumente zur Akkreditierung des Studiengangs
+
+# URL of your avatar or profile pic (you could use your GitHub profile pic)
+avatar: https://raw.githubusercontent.com/th-koeln/mi-2017/master/images/box.png
+
+# Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
+# Used for Sitemap.xml and your RSS feed
+url: https://git.st.archi-lab.io/master/master-digital-science
+
+# Basis URL zum Editieren im Repo
+edit-base: https://git.st.archi-lab.io/master/master-digital-science/edit/master/
+edit-params: ?useDefaultHandler=true
+
+# If you're hosting your site at a Project repository on GitHub pages
+# (http://yourusername.github.io/repository-name)
+# and NOT your User repository (http://yourusername.github.io)
+# then add in the baseurl here, like this: "/repository-name"
+#bitte base url root lassen<-- Für Dokku!!
+baseurl: "http://master.pages.st.archi-lab.io/master-digital-science"
+# bitte nicht ändern, für die Lokalisierung nötig - muss gleicher Wert wie baseurl sein!
+baseurl_absolute: "http://master.pages.st.archi-lab.io/master-digital-science"
+
+# Debug-Flag, shows some information only need when developing new content
+developer: true
+
+#
+# !! You don't need to change any of the configuration flags below !!
+#
+
+permalink: /:title/
+
+# The release of Jekyll Now that you're using
+version: v3.8.1
+
+# encoding
+encoding: utf-8
+
+# be sure that you use kramdown as markdown processor
+markdown: kramdown
+
+# Jekyll 3 now only supports Kramdown for Markdown
+kramdown:
+  extensions: [footnotes]
+  footnote_location: 'my_footnotes'
+  parse_block_html: true
+  # Use GitHub flavored markdown, including triple backtick fenced code blocks
+  input: GFM
+  # Jekyll 3 and GitHub Pages now only support rouge for syntax highlighting
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    # Use existing pygments syntax highlighting css
+    css_class: 'highlight'
+
+# Set the Sass partials directory, as we're using @imports
+sass:
+  style: :expanded # You might prefer to minify using :compressed
+
+# Use the following plug-ins
+plugins: ['jekyll/scholar', jekyll-multiple-languages-plugin]
+
+# Exclude these files from your production _site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README.md
+  - CNAME
+  - presentations/impress-js/lib/bootstrap/
+  - tex/
+  - pruefungsordnung
+
+
+# jekyll-multiple-languages-plugin settings:
+#languages: ["de", "en", "dbis", "ebis", "ddis", "edis", "ditm", "eitm", "dsar", "esar"]
+languages: ["de", "en"]
+
+exclude_from_localizations: ["_blueprints", "favicon.ico", "docs-and-stuff", "tex", "anhaenge"]
+
+collections:
+  modules:
+    output: true
+    layout: modulbeschreibung
+  startpages:
+    output: true
+    layout: startpage
+  personas:
+    output: true
+    layout: simple
+  handlungsfelder:
+    output: true
+    layout: handlungsfeld
+  studyprograms:
+    output: true
+    layout: studyprogram
+  studyprogram_competences:
+    output: true
+  competences:
+    output: true
+    layout: simple
+  selbstbericht:
+    layout: selbstbericht
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "modules"
+    values:
+      layout: modulbeschreibung
+  -
+    scope:
+      path: ""
+      type: "handlungsfelder"
+    values:
+      layout: handlungsfeld
+  - 
+    scope:
+      path: ""
+      type: "studyprograms"
+    values:
+      layout: studyprogram
+  -
+    scope:
+      path: ""
+      type: "personas"
+    values:
+      layout: simple
+
+# plugin jekyll scholar
+scholar:
+  style: apa
+  source: ./_data
+  bibliography: references.bib
+  locale: de
+  bibliography_template: {{reference}}

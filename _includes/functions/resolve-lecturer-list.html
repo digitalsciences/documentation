@@ -1,0 +1,34 @@
+{% assign module_mgmt_info = "" %}
+{% assign lecturer_info = "" %}
+
+{% if include.responsible.module_management %}
+    {% assign module_mgmt_list = include.responsible.module_management | split: ";"  %}
+    {% assign name_list = "" | split: "|"  %}
+    {% for person in module_mgmt_list %}
+        {% include /functions/resolve-lecturer-name.html acronym=person detailed=include.detailed %}
+        {% assign name_list = name_list | push: person_name %}
+    {% endfor %}
+    {% assign module_mgmt_info = name_list | join: ", " %}
+{% endif %}
+
+{% if include.responsible.lecturers %}
+    {% assign lecturer_list = include.responsible.lecturers | split: ";"  %}
+    {% assign name_list = "" | split: "|"  %}
+    {% for person in lecturer_list %}
+        {% include /functions/resolve-lecturer-name.html acronym=person detailed=include.detailed %}
+        {% assign name_list = name_list | push: person_name %}
+    {% endfor %}
+    {% assign lecturer_info = name_list | join: ", " %}
+{% endif %}
+
+{% comment %}
+If detailed=0, then it's the overview; in that case, set the lecturers equal to the module responsible person,
+if not explicitly specified.
+{% endcomment %}
+
+{% if include.detailed %}
+{% else %}
+    {% if lecturer_info.size == 0 %}
+        {% assign lecturer_info = module_mgmt_info %}
+    {% endif %}
+{% endif %}

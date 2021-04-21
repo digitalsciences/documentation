@@ -1,0 +1,6 @@
+---
+layout: none
+---
+Kuerzel;Titel;Verantwortlich;Fakultaet;Status;Semester;Sprache;gak;acs;eb;ar;dip;mri;Fehler;Warnungen;Hinweise;Max_Teilnehmer;Projekt;Prüfung
+{% assign modules_sorted = site.modules | where: "abstract", nil | sort: "title" %}{% for mod in modules_sorted %}{{ mod.acronym }};{{ mod.title }};{{ mod.responsible.module_management }};{{ site.data.people[mod.responsible.module_management].faculty }};{{ mod.status | split: "." | last }};{{ mod.semester | split: "." | last }};{{ mod.language | split: "." | last }};{{ mod.ects.contributions_to_focus_areas.gak.num }};{{ mod.ects.contributions_to_focus_areas.acs.num }};{{ mod.ects.contributions_to_focus_areas.eb.num }};{{ mod.ects.contributions_to_focus_areas.ar.num }};{{ mod.ects.contributions_to_focus_areas.dip.num }};{{ mod.ects.contributions_to_focus_areas.mri.num }};{% capture myoutput %}{% include /functions/find-module-errors.html mymodule=mod formatting="csv" %}{{err_warn_flags}}{% endcapture %}{{ myoutput | strip }};{{ mod.participants.max }};{{ mod.project }};{{ site.data.examtypes[mod.exam].d.short }};
+{% endfor %}

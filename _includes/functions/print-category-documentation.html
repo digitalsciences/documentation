@@ -1,0 +1,71 @@
+<!-- Pretty-prints the documentation for a front matter category, recursively.  -->
+
+{% assign category = include.category %}
+
+<h3>{{ category[0] }}:</h3>
+
+<p>{{ category[1].doc }}
+
+{% if category[1].options %}
+Bitte benutze eine der nachfolgenden Optionen, keinen Freitext.
+</p><p>
+<table>
+    <thead>
+    <tr>
+        <td>Option</td>
+        <td>Volltext</td>
+        <td>Erklärung (optional)</td>
+    </tr>
+    </thead>
+
+    {% for option in category[1].options %}
+    <tr>
+        <td>modules.{{ category[0] }}.options.{{option[0]}}</td>
+        <td>{{ option[1] }}</td>
+        <td>
+            {% capture option_name %}{{option[0]}}{% endcapture %}
+            {{ category[1].options_doc[option_name] }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</p>
+{% endif %}
+<hr>
+
+<!-- recursive call for potential sub-structures: loop through the options sub-elements and call recursively for
+     all elements that do not match the standard names "trans", "doc", "options" and "options_doc". -->
+{% for sub_item in category[1] %}
+    {% if sub_item[0] != "trans" and sub_item[0] != "doc" and sub_item[0] != "options" and sub_item[0] != "options_doc" %}
+        {% include /functions/print-category-documentation.html category=sub_item %}
+    {% endif %}
+{% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% assign counter = 0 %}
+{% for exam_form in exam_form_list %}
+    {% if include.acronym_list contains exam_form[1].key %}
+        <a href="{{site.baseurl}}/pruefungsformen/#{{exam_form[1].key | slugify}}">{{exam_form[1].name}}</a>
+        {% assign counter = counter | plus: 1 %}
+        {% if counter < include.acronym_list.size %} / {% endif %}
+    {% endif %}
+{% endfor %}
+

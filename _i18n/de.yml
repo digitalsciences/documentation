@@ -1,0 +1,462 @@
+#-------------------
+branding:
+  # This part is needed for providing individual entry points for all study programs. It was the easiest way
+  # to provide this via the localization plugin. The file name denotes the study program: "de.yml" and "en.yml"
+  # stand for the Master as the "umbrella", the others (like "dsar.yml", "esar.yml" etc.) for the study programs.
+  # As of now, there are only two things that actually are branded: The header color, and the header text.
+  header_color: "#C90C0F"
+  #header_color: "#7F7F7F"
+  header_title: Master Digital Sciences
+  header_subtitle: Dokumente zur Akkreditierung des Studiengangs
+  switch_to_de:
+  switch_to_en: "/en"
+  lang_discriminator:
+#-------------------
+global:
+  name: Master Digital Sciences
+  description: Dokumente zur Akkreditierung des Studiengangs
+  specialization: Studienrichtung im Master Digital Sciences
+  edit: Bearbeiten
+  tbd: tbd.
+  with: mit
+  module_list_disclaimer: <b>Achtung</b> - Modulliste ist noch in Abstimmung und nicht vollständig. Eine Veranstaltung fehlt?
+    Bitte die entsprechenden Mitglieder der Entwicklungsteams direkt ansprechen.
+  reference_contact_list: Siehe Kontaktliste auf der Startseite.
+  error: Fehler
+  warning: Warnung
+  info: Hinweis
+  ok: alles ok
+#-------------------
+people:
+  all_long: alle Professor*innen im Studiengang
+  all_short: alle Professor*innen
+  acronym: Kürzel
+  modules: Module
+  fullname: Name
+  lecturers: Dozent*innen
+  faculty: Fakultät
+#-------------------
+main_menu:
+  start: Start
+  document: Dokumente
+  specializations: Studienrichtungen
+  focus_areas: Handlungsfelder
+  exam_types: Prüfungen
+  lecturers: Dozent*innen
+  module_reference: Modulhandbuch
+  examination_regulations: Prüfungsordnung (Entwurf)
+  graduate_profiles: Absolvent*innen-Profile
+  study_schedule: Studienverlaufsplan
+  modules: Module
+#-------------------
+footer:
+  content-developer-documentation: Dokumentation für Studiengangs-Entwickler*innen und Dozent*innen (wie beschreibt man Module, etc.)
+  repo: Zum Gitlab-Repository für diese Website (Login erforderlich)
+  imprint: Impressum
+  disclaimer: Haftungshinweis
+  privacy: Datenschutzhinweis
+#-------------------
+exams:
+  examtypes: Prüfungsformen
+  form: Form
+  acronym: Kürzel
+  description: Beschreibung
+  explanation: Nachfolgend sind die in den Modulen verwendenten Prüfungsformen aufgeführt.
+  exam_combination_overview: Kombination
+  exam_combination_details: Kombination verschiedener Prüfungsformen
+  tbd: tbd.
+  unclear: ???
+#-------------------
+studyprograms:
+  heading_alumni_profiles: Absolventenprofile und beispielhafte Studienverläufe
+  term: Fachsemester
+  module: Modul
+  acronym: Kürzel
+  curriculum_intro: >
+    Nachfolgend sind typische Absolventenprofile und beispielhafte Studienverläufe beschrieben.
+  heading_example_curriculum: Beispielhafter Studienverlaufsplan
+  heading_example_curriculum_explanation: >
+    In der nachfolgenden Tabelle ist ein beispielhafter Studienverlaufsplan für dieses Absolventprofil dargestellt.
+  subtotal: Zwischensumme
+  total: Gesamt
+#-------------------
+moduledescription:
+  module: Modul
+  errors_warnings_header: Fehler, Warnungen, Hinweise
+  errors_warnings_description: Die Site ist zurzeit in der (Weiter-)Entwicklung. Daher werden nachfolgend
+    Fehler, Warnungen und Hinweise zur Modulbeschreibung angezeigt. Im produktiven Modus werden diese
+    Meldungen ausgeblendet.
+  organizational_details_header: Informationen zur Organisation des Moduls
+  contribution_to_focus_areas_header: Beitrag zu Handlungsfeldern
+  contribution_to_focus_areas_description: Nachfolgend ist die Zuordnung des Moduls zu den Handlungsfeldern
+    des Studiengangs aufgeführt, und zwar als anteiliger Beitrag (als ECTS und inhaltlich). Dies gibt auch
+    Auskunft über die Verwendbarkeit des Moduls in anderen Studiengängen und über die Beziehung zu
+    anderen Modulen im selben Studiengang.
+  focus_area: Handlungsfeld
+  ects_proportional: ECTS (anteilig)
+  contribution: Modulbeitrag zum Handlungsfeld
+  duration_unit: Semester
+  none: keine
+  total_effort: Gesamtaufwand
+  contact_time: Kontaktzeit
+  self_learning_time: Selbstlernzeit
+  containing: davon
+  responsible_for_module: Modulverantwortlich
+  no_participant_restriction: keine Beschränkungen
+  learning_outcome: Learning Outcome
+  modulecontent: Inhaltliche Beschreibung des Moduls
+  teaching_learning_forms: Lehr- und Lernformen
+  learning_material: Zur Verfügung gestelltes Lehrmaterial
+  literature: Weiterführende Literatur
+  thesis_contribution_to_focus_areas: Beitrag hängt vom Thema ab
+  individual_work: Einzelarbeit
+  thesis_and_colloquium: Thesis und Kolloquium
+#
+#----------------------------------------------
+# Modul-Dokumentation (Front-Matter-Kategorien)
+#----------------------------------------------
+# Dieser Abschnitt des Language Files dient auch dazu, die Dokumentation für die (Studiengangs-)Developer zu
+# generieren. Daher muss die folgende Standard-Struktur eingehalten werden:
+#     category:  <wie im Front Matter der Modulbeschreibung, kein String!>
+#       trans: <Übersetzung der Kategorie
+#       doc: <Dokumentierende Beschreibung für die Studiengangs-Entwicklerin. Taucht nur im Doku-File auf.>
+#       options: <kein String! Nur falls es Auswahloptionen gibt, wie bei Sprache oder "angeboten SS/WS".
+#         opt1: <übersetzter Langtext zu opt1>
+#         opt2: <übersetzter Langtext zu opt2>
+#       options_doc: <kein String! Nur falls es Auswahloptionen gibt.
+#         opt1: <Dokumentation für opt1>
+#         opt2: <Dokumentation für opt2>
+#
+modules:
+  type:
+    trans: Typ
+    doc: Lass hier bitte immer einfach "modul" stehen.
+#
+  acronym:
+    trans: Kürzel
+    doc: Dieses Kürzel dient zweierlei Zweck. Einerseits ist es die nach außen (für Studierende) sichtbare Abkürzung
+      für das Modul. Andererseits wird es intern in dieser Website verwendet, um das Modul von woanders (zum
+      Beispiel in den Beispiel-Studiengangsverläufen) zu referenzieren. Aus diesen beiden Gründen muss das Kürzel
+      innerhalb des gesamten Masters eindeutig sein und sollte nach Möglichkeit später nicht geändert werden
+      (Risiko von "Broken Links").
+#
+  title:
+    trans: Titel
+    doc: Titel des Moduls, so wie es im Modulverzeichnis auftauchen soll. Sinnigerweise sollte der Titel bei
+      englischen Modulen auch Englisch sein.
+#
+  abstract:
+    trans: abstract
+    doc: Optionales Flag, um eine "abstrakte" Modulbeschreibung zu kennzeichnen. Abstrakte Module tauchen nicht in
+      der Modulliste auf. Sie sind (wie bei der Vererbung bei Klassen) als "Parent" gedacht, bei dem eine gemeinsam
+      und generische Modulbeschreibung zwischen verschiedenen Child-Modulen geteilt wird. <p/>
+      Ein Beispiel hierfür sind Guided Projects. Es gibt ein abstraktes GP, das die (generische) Beschreibung
+      enthält, was ein Guided Project ausmacht. In der Modulliste tauchen aber nur die konkreten GP-Instanzen
+      auf, für die dann die jeweilige Einzahlung auf die Handlungsfelder festgelegt sind. Diese Child-Instanzen
+      flagged man mit "instanceof" (siehe unten). <p/>
+      Das Flag sollte mit einem beliebigen Wert (z.B. einer 1) benutzt werden.
+#
+  is_thesis:
+    trans: Dies ist die Abschlussarbeit des Master-Studiums
+    doc: Dies ist die Masterarbeit.
+    ects_thesis:
+      trans: ECTS für Thesis
+      doc: ECTS für Thesis
+    ects_colloquium:
+      trans: ECTS für Kolloquium
+      doc: ECTS für Kolloquium
+#
+  instanceof:
+    trans: instanceof
+    doc: Optionales Flag, mit dem man anzeigt, dass dieses Modul seine Modulbeschreibung von einem "abstrakten"
+      Parent-Modul erbt. Als Wert dieses Parameters muss das Acronym (Kürzel) des Parents angegeben werden. Siehe auch
+      "abstract". <p/>
+      Wichtig - die Front-Matter-Bereiche werden nicht vererbt (geht technisch in Jekyll leider nicht so ohne
+      weiteres). Jedes "instanceof"-Modul muss also seinen eigenen unabhängigen Front-Matter-Bereich haben (da
+      muss man also mit Copy-Paste arbeiten). Nur der Content (die eigentliche Modulbeschreibung) wird vererbt.
+#
+  responsible:
+    trans: Lehrende*r
+    doc: Verantwortliche(r) und Lehrende(r) für das Modul. <p/>
+      "responsible" hat selbst keine Parameter, sondern dient nur als Klammer für die nachfolgenden Werte
+      "module_management" und/oder "lecturers".
+    module_management:
+      trans: Modulverantwortung
+      doc: Verantwortliche*r für das Modul (Pflichtfeld!). Bitte nutze keinen Freitext, sondern verwende die
+        Kürzel aus der Liste der Lehrenden. Du kannst mehrere Verantwortliche nennen, in diesem Fall bitte als
+        Semikolon-getrennte Liste OHNE LEERZEICHEN.
+    lecturers:
+      trans: Lehrende
+      doc: Falls der/die Modulverantwortliche die einzige Person ist, die in dem Modul lehrt, kann dieses
+        Feld weggelassen werden. Falls aber z.B. im Team gelehrt wird, oder rotierend, dann können hier
+        die Lehrenden genannt werden (bitte als Semikolon-getrennte Liste OHNE LEERZEICHEN). <p/>
+        Wenn der/die Modulverantwortliche auch Lehre macht (sollte der Normalfall sein), dann muss ihr/sein
+        KÜrzel hier bitte auch noch einmal aufgeführt werden.
+#
+  status:
+    trans: Status
+    doc: Status der Modulbeschreibung (wie vollständig ist der Inhalt schon abgestimmt und beschlossen).
+    options:
+      ok: ok
+      in_discussion: in Abstimmung
+      required: wäre nötig, Realisierung unklar
+      lo_ok_but_wrong_format: Learning Outcome ok, aber in falschem Format
+      lo_nok: Learning Outcome nicht ok
+    options_doc:
+      ok: Alles ok - Inhalt ist abgestimmt, im richtigen Format, Verantwortliche*r steht fest und hat Commitment abgegeben.
+      in_discussion: Ist in Diskussion, aber entweder Inhalte sind noch nicht präzisiert, oder Verantwortliche noch nicht
+          ganz klar (oder beides).
+      required: Aus Sicht des Curriculums oder des Absolventenprofils besteht eine Notwendigkeit für diese Veranstaltung.
+        Zur Zeit ist sie aber nicht gesichert und nicht Teil des Modulkatalogs.
+      lo_ok_but_wrong_format: >
+        Learning Outcome scheint grundsätzlich ok, aber hat falsches Format (nicht im WAS - WIE - WOZU Format)
+      lo_nok: >
+        Learning Outcome nicht ok (kann nicht einfach ins WAS - WIE - WOZU Format konvertiert werden,
+        sondern muss neugeschrieben werden)
+#
+  language:
+    trans: Sprache
+    doc: Sprache der Veranstaltung.
+    options:
+      de: Deutsch
+      en: Englisch
+      de_or_en: Englisch (falls intern. Teiln.)
+      de_and_en: Sowohl Deutsch als auch Englisch
+    options_doc:
+      de: Modul findet auf Deutsch statt. Lehr- und Prüfungsmaterialien sind auf Deutsch.
+      en: Modul findet auf Englisch statt. Lehr- und Prüfungsmaterialien sind auf Englisch.
+      de_or_en: Modul findet auf Englisch statt, falls es nicht deutschsprachige Teilnehmer*innen gibt.
+        Bei einer rein deutschen Teilnehmerschaft besteht die Option, das Modul in Deutsch durchzuführen.
+        Lehr- und Prüfungsmaterialien sind im Regelfall auf Englisch.
+      de_and_en: Dieses Modul findet mehrfach statt, sowohl in rein deutscher als auch in englischsprachiger Form
+        (z.B. Projekte oder Abschlussarbeiten).
+#
+  semester:
+    trans: Angeboten im
+    doc: Sagt aus, ob das Modul im Sommer- oder Wintersemester angeboten wird, oder in beiden (z.B. Abschlussarbeiten
+      und Projekte)
+    options:
+      ws: Wintersemester
+      ss: Sommersemester
+      ss_ws: Jedes Semester
+      ws_opt: Wintersemester (falls Lehrkapazität vorhanden)
+      ss_opt: Sommersemester (falls Lehrkapazität vorhanden)
+      ss_ws_opt: Jedes Semester (falls Lehrkapazität vorhanden)
+    options_latex:
+      ws: WS
+      ss: SS
+      ss_ws: WS und SS
+      ws_opt: WS (opt.)
+      ss_opt: SS (opt.)
+      ss_ws_opt: WS und SS (opt.)
+    options_doc:
+      ws: Modul wird nur im Wintersemester angeboten.
+      ss: Modul wird nur im Sommersemester angeboten.
+      ss_ws: Modul wird sowohl im Sommer- wie auch im Wintersemester angeboten. Typisch für "generische"
+        Module wie Masterarbeit oder Projekt.
+      ws_opt: Modul wird im Wintersemester angeboten, falls genügend Lehrkapazität zur Verfügung steht.
+        Andernfalls entfällt das Modul.
+      ss_opt: Modul wird im Sommersemester angeboten, falls genügend Lehrkapazität zur Verfügung steht.
+        Andernfalls entfällt das Modul.
+      ss_ws_opt: Modul wird sowohl im Sommer- als auch im Wintersemester angeboten, falls genügend Lehrkapazität
+        zur Verfügung steht. Andernfalls entfällt das Modul.
+#
+  duration:
+      trans: Dauer
+      doc: Dauer des Moduls in Semester. Bitte Angabe als ganze Zahl ohne Einheit (üblicherweise 1).
+#
+  location:
+      trans: Ort
+      doc: Ort, an dem die Veranstaltung stattfindet.
+      options:
+        gm: Campus Gummersbach, oder remote
+        kdeutz: Campus Köln Deutz, oder remote
+        ksued: Campus Köln Süd, oder remote
+        kmh: Campus Köln Mülheim (Code & Context), oder remote
+        remote: Remote
+        all_sites: An allen Standorten, oder remote
+      options_doc:
+        gm: Veranstaltung wird in der Regel am Campus Gummersbach stattfinden, oder remote.
+        kdeutz: Veranstaltung wird in der Regel am Campus Köln Deutz stattfinden, oder remote.
+        ksued: Veranstaltung wird in der Regel am Campus Köln Süd stattfinden, oder remote.
+        kmh: Veranstaltung wird in der Regel am Campus Köln Mülheim (Code & Context) stattfinden, oder remote.
+        remote: Veranstaltung wird (auch nach Corona) überwiegend remote (Videokonferenzen etc.) stattfinden, oder remote.
+        all_sites: Veranstaltung kann an allen oben genannten Orten stattfinden, oder remote.
+#
+  participants:
+    trans: Anzahl Teilnehmer*innen
+    doc: Minimale und/oder maximale Teilnehmerzahl der Veranstaltung. Optionale Angabe, kann als fehlen. <p/>
+      "participants" hat selbst keine Parameter, sondern dient nur als Klammer für die nachfolgenden Werte "min"
+      und/oder "max".
+    min:
+      trans: minimal
+      doc: Minimale Teilnehmerzahl der Veranstaltung - zum Beispiel bei Wahlpflichtveranstaltungen, bei denen unterhalb
+        einer gewissen Teilnehmerzahl die Veranstaltung keinen Sinn ergibt. Optionale Angabe, kann also fehlen.
+        Wenn Angabe, dann bitte als ganze Zahl ohne Zusätze.
+    max:
+      trans: maximal
+      doc: Maximale Teilnehmerzahl der Veranstaltung. Falls das Modul synergetisch in mehreren Studiengängen angeboten
+        wird, so sollte hier die Zahl der Plätze angegeben werden, die für unseren Master zur Verfügung gestellt werden.
+        Optionale Angabe, kann also fehlen. Wenn Angabe, dann bitte als ganze Zahl ohne Zusätze.
+#
+  ects:
+    trans: ECTS
+    doc: Credits für die Veranstaltung. Kann entweder als ECTS pro Handlungsfeld angegeben werden (Normalfall, siehe
+      unten), oder als Gesamt-ECTS, falls ein Modul verschiedene Ausprägungen haben kann. <p/>
+      "ects" hat selbst keine Parameter, sondern dient nur als Klammer für die nachfolgenden Werte.
+    total_ects:
+      trans: Gesamt-ECTS
+      doc: Gesamt-Credits für die Veranstaltung. WICHTIG - im Regelfall werden die ECTS über die Beiträge zu den
+        Handlungsfeldern aufsummiert. Bei Modulen, wo diese Beiträge je nach Ausprägung verschieden sein können
+        (Projekte, Abschlussarbeiten) funktioniert dieser Ansatz nicht. In diesem Fall müssen die ECTS über die
+        Kategorie "ects.total_ects" angegeben werden. Ansonsten bitte ganz weglassen!
+    contributions_to_focus_areas:
+      trans: Beitrag zu Handlungsfeldern (in ECTS)
+      doc: Im Regelfall werden die ECTS über die Beiträge zu den Handlungsfeldern aufsummiert. Bei Modulen, wo
+        diese Beiträge je nach Ausprägung verschieden sein können (Projekte, Abschlussarbeiten), muss "total_ects"
+        benutzt werden. Dann muss "contributions_to_focus_areas" bitte GANZ WEGGELASSEN werden. <p/>
+        "ects.contributions_to_focus_areas" hat selbst keine Parameter, sondern dient nur als Klammer für die nachfolgenden Werte.
+      gak:
+        trans: GAK
+        doc: (siehe Unterkategorien)
+        num:
+          trans: Anteiliger Beitrag in ECTS zum Handlungsfeld "GAK"
+          doc: Anteiliger Beitrag in ECTS zum Handlungsfeld "GAK". Bitte einfach als ganze Zahl ohne weitere Einheit angeben.
+        desc:
+          trans: Kurzbeschreibung des Beitrag zum Handlungsfeld "GAK"
+          doc: Kurzbeschreibung des Beitrag zum Handlungsfeld "GAK". Kurze Zusammenfassung, in welcher Weise das Modul zum Handlungsfeld beiträgt.
+      acs:
+        trans: ACS
+        doc: (siehe Unterkategorien)
+        num:
+          trans: Anteiliger Beitrag in ECTS zum Handlungsfeld "ACS"
+          doc: Anteiliger Beitrag in ECTS zum Handlungsfeld "ACS". Bitte einfach als ganze Zahl ohne weitere Einheit angeben.
+        desc:
+          trans: Kurzbeschreibung des Beitrag zum Handlungsfeld "ACS"
+          doc: Kurzbeschreibung des Beitrag zum Handlungsfeld "ACS". Kurze Zusammenfassung, in welcher Weise das Modul zum Handlungsfeld beiträgt.
+      eb:
+        trans: EB
+        doc: (siehe Unterkategorien)
+        num:
+          trans: Anteiliger Beitrag in ECTS zum Handlungsfeld "EB"
+          doc: Anteiliger Beitrag in ECTS zum Handlungsfeld "EB". Bitte einfach als ganze Zahl ohne weitere Einheit angeben.
+        desc:
+          trans: Kurzbeschreibung des Beitrag zum Handlungsfeld "EB"
+          doc: Kurzbeschreibung des Beitrag zum Handlungsfeld "EB". Kurze Zusammenfassung, in welcher Weise das Modul zum Handlungsfeld beiträgt.
+      dip:
+        trans: DIP
+        doc: (siehe Unterkategorien)
+        num:
+          trans: Anteiliger Beitrag in ECTS zum Handlungsfeld "DIP"
+          doc: Anteiliger Beitrag in ECTS zum Handlungsfeld "DIP". Bitte einfach als ganze Zahl ohne weitere Einheit angeben.
+        desc:
+          trans: Kurzbeschreibung des Beitrag zum Handlungsfeld "DIP"
+          doc: Kurzbeschreibung des Beitrag zum Handlungsfeld "DIP". Kurze Zusammenfassung, in welcher Weise das Modul zum Handlungsfeld beiträgt.
+      mri:
+        trans: MRI
+        doc: (siehe Unterkategorien)
+        num:
+          trans: Anteiliger Beitrag in ECTS zum Handlungsfeld "MRI"
+          doc: Anteiliger Beitrag in ECTS zum Handlungsfeld "MRI". Bitte einfach als ganze Zahl ohne weitere Einheit angeben.
+        desc:
+          trans: Kurzbeschreibung des Beitrag zum Handlungsfeld "MRI"
+          doc: Kurzbeschreibung des Beitrag zum Handlungsfeld "MRI". Kurze Zusammenfassung, in welcher Weise das Modul zum Handlungsfeld beiträgt.
+#
+  exam:
+    trans: Prüfung
+    doc: Prüfungsform(en) für das Modul. Wenn mehrere, dann bitte mit Semikolon OHNE LEERZEICHEN trennen. Bitte
+      nutze keinen Freitext, sondern verwende die Kürzel aus der Liste unter _data/pruefungsformen.
+#
+  precondition:
+    trans: Vorbedingung
+    doc: Vorbedingungen für die Teilnahme an dem Modul
+#
+  recommendation:
+    trans: Empfehlung
+    doc: Empfehlungen für die Teilnahme an dem Modul (nicht bindend)
+#
+  effort:
+    trans: Aufwand
+    doc: Arbeitsaufwand erst in Gesamt-Stunden, aufgeschlüsselt nach den einzelnen Strukturelementen
+      einer Veranstaltung. Die Gesamtstunden werden automatisch aus den ECTS berechnet und werden hier deshalb nicht
+      explizit angegeben. <p/>
+      Gleiches gilt für die Kontaktzeit (berechnet als Summe aus Vorlesung, Seminar, Übung und Praktikum) und für die
+      Selbstlernzeit berechnet als Summe aus Gesamtzeit - Kontaktzeit). <p/>
+      "effort" hat selbst keine Parameter, sondern dient nur als Klammer für die nachfolgenden Werte.
+    lecture:
+      trans: Vorlesung
+      doc: Zeit in [h], die die Studierenden für den Besuch des Vorlesungsteils aufbringen. Bitte gebt das als ganze
+        Zahl ohne Einheit an, oder als 0, wenn es keinen Vorlesungsanteil gibt.
+    seminar:
+      trans: Seminar
+      doc: Zeit in [h], die die Studierenden für den Besuch des seminaristischen Teils der Veranstaltung aufbringen.
+        Bitte gebt das als ganze Zahl ohne Einheit an, oder als 0, wenn es keinen seminaristischen Teil gibt.
+    practical:
+      trans: Praktikum
+      doc: Zeit in [h], die die Studierenden für den Besuch eines Praktikums aufbringen. Bitte gebt das als ganze
+        Zahl ohne Einheit an, oder als 0, wenn es kein Praktikums gibt. (Hinweis - Praktikum ist nicht dasselbe wie
+        Projektarbeit, s. unten.)
+    exercise:
+      trans: Übung
+      doc: Zeit in [h], die die Studierenden für den Besuch einer Übung aufbringen. Bitte gebt das als ganze
+        Zahl ohne Einheit an, oder als 0, wenn es keine Übung gibt.
+    project_supervision:
+      trans: Projektbetreuung
+      doc: Zeit in [h], die die Studierenden in Treffen zur Projektbetreuung (Kickoffs, Statustreffen,
+        Sprint Reviews und -Plannings, etc.) verbringen. Projektbetreuung zählt als Kontaktzeit.
+        Bitte gebt das als ganze Zahl ohne Einheit an, oder als 0, wenn es keinen Projektteil gibt.
+    project_work:
+      trans: eigenständige Projektarbeit
+      doc: Zeit in [h], die die Studierenden eigenständg für die Bearbeitung eines Projektteils in der Veranstaltung
+        aufbringen. Eigenständige Projektarbeit zählt als Selbstlernzeit. Bitte gebt das als ganze Zahl ohne Einheit an, oder als 0,
+        wenn es keinen Projektteil gibt.
+    sws_lecturer:
+      trans: SWS im Lehrerhebungsbogen
+      doc: Aufwand des Lehrenden, den sie/er bei Lehrerhebungsbogen geltend macht, wenn man von einer
+        Veranstaltungsgröße bei maximaler Teilnehmendenzahl (siehe oben) ausgeht. Handelt es sich um ein Modul,
+        dasss synergetisch mehrere Studiengänge bedient wie z.B. Mathematik oder IT-Sicherheit, wäre es der Anteil,
+        der auf unseren Master entfällt. <p/>
+        Bitte gib eine ganze Zahl (ohne Zusätze) an, die für SWS steht. Diese Information wird NICHT nach außen
+        sichtbar gemacht, sondern dient nur für die interne Diskussion.
+#
+  ignore:
+    trans: Ignore-Liste für Fehler-, Warnungs- und Info-Meldungen
+    doc: Im Developer-Modus werden Fehler-, Warnungs- und Info-Meldungen ausgegeben, die
+      Modul-Front-Matter und -Inhalte betreffen. Möglicherweise gibt es Fälle, wo man vom Normalfall
+      abweichen möchte. Die Meldung wäre dann eigentlich gegenstandslos. In diesem Fall kann man
+      sie in dieser optionalen Ignore-List aufführen. Trägt man z.B. E001;W003 ein, dann wird die
+      Fehlermeldung E001 und die Warnung W003 nicht mehr ausgegeben.
+#
+  content:
+    trans:
+    doc: (Relativ...) frei gestaltbarer Teil der Modulbeschreibung - das, was nach dem "Front Matter" Teil kommt. Du
+      kannst hier selbst weitere Inhalte hinzufügen. Allerdings ist die Empfehlung, die hier genannten Überschriften
+      auf jeden Fall mit Leben zu füllen. <p/>
+      Wichtig ist im Übrigen, dass du in der Modulbeschreibung die Überschriften-Kürzel (also so etwas wie
+      "{{ site.translations[site.lang].modulecontent.learning_outcome }}" stehen lässt und nicht editierst.
+      Die werden für die Lokalisierung gebraucht.
+    learning_outcome:
+      trans: Learning Outcome
+      doc: Das Learning Outcome, gemäß dem Didaktikmodell der TH Köln.
+        Siehe z.B. www.th-koeln.de/mam/downloads/deutsch/hochschule/profil/lehre/steckbrief_learning_outcomes.pdf.
+        Dort wird eine "WAS - WOMIT - WOZU" Struktur empfohlen. <p/>
+        WAS - "Die Studierenden können statische Berechnungen an einem Beispielgerüst durchführen, ...". <p/>
+        WOMIT - "... indem sie relevante Maße erheben, die passenden Materialien auswählen und Ergebnisse von
+        mehreren Schritten nach dem XYZ-Modell zusammenführen, ..." <p/>
+        WOZU - "... um später entscheiden zu zu können, welche Materialien, Verbindungen und Maße benötigt werden,
+        um ein Gerüst zu konzipieren."
+    modulecontent:
+      trans: Inhaltliche Beschreibung des Moduls
+      doc: Inhalt und Aufbau des Moduls, gern in Spiegelstrichen als "Inhaltsangabe".
+    teaching_learning_forms:
+      trans: Lehr- und Lernformen
+      doc: Beschreibung der didaktischen Formen, die in der Veranstaltung eingesetzt werden (z.B. "seminaristischer
+        Teil zur Erarbeitung der Inhalte, verbunden mit einer praktischen begleitenden Projektarbeit mit einem
+        Industriepartner").
+    learning_material:
+      trans: Zur Verfügung gestelltes Lehrmaterial
+      doc: Liste der in der Veranstaltung zur Verfügung gestellten Lehrmaterialien, z.B. Literaturliste, Methodenhandbuch,
+        Git-Repo mit Beispielcode, etc.
+    literature:
+      trans: Weiterführende Literatur
+      doc: Liste von weiterführender Literatur für das Modul.

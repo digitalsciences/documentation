@@ -1,0 +1,377 @@
+%styles
+%Da Latex für englischsprachige Texte ausgerichtet ist,
+%wird als Dokumentenklasse das "`scrbook"' von Markus Kohm verwendet.
+%Dieses ist für deutschsprachige Texte ausgelegt.
+%BCOR12mm: 12mm Bindekorrektur (Verbreiterung des linken Randes)
+%DIV11: entspricht in etwas der geforderten Textgröße und Seitenränder
+%titlepage: eine Titelseite wird verwendet
+%a4paper: DIN A4
+%oneside: für eine spätere einseitige Bedruckung
+
+
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\nonstopmode
+\documentclass[BCOR12mm,DIV11,titlepage,a4paper,oneside,10pt]{scrbook}
+
+\newcommand{\docname}{Modulhandbuch}
+
+% ================================================
+
+% Farben definieren
+\usepackage{color}
+\usepackage[html]{xcolor}
+\definecolor{thk_red}{HTML}{C90C0F}
+\definecolor{thk_orange}{HTML}{EA5B0C}
+\definecolor{thk_green}{HTML}{00B050}
+\definecolor{thk_purple}{HTML}{BB2585}
+\definecolor{thk_grey}{HTML}{7F7F7F}
+\definecolor{thk_blue}{HTML}{0076C0}
+\definecolor{thk_black}{HTML}{000000}
+
+% ================================================
+% FONTS
+% ================================================
+\usepackage{fontspec,xltxtra}
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Arial}
+
+%\setmainfont[
+% BoldFont={Myriad Pro SemiCondensed},
+% ItalicFont={Myriad Pro Light SemiCondensed},
+% BoldItalicFont={Myriad Pro Light SemiCondensed}
+% ]{Myriad Pro Light SemiCondensed}
+
+%\setmainfont[
+%BoldFont={Arial},
+%ItalicFont={Arial},
+%BoldItalicFont={Arial}
+%]{Arial}
+
+%\setsansfont[Scale=MatchLowercase,Mapping=tex-text]{Gill Sans}
+%\setmonofont[Scale=MatchLowercase]{Andale Mono}
+
+% ================================================
+% FONTS FOR HEADLINES
+% ================================================
+
+\usepackage{tocloft}
+%\renewcommand{\cftpartfont}{\bfseries}
+%\renewcommand{\cftchapfont}{\scshape}
+%\renewcommand{\cftsecfont}{\scshape}
+\setlength{\cftbeforechapskip}{2pt}
+
+
+\setlength{\tabcolsep}{0pt}
+
+\usepackage{afterpage}% for "\afterpage"
+\usepackage{pagecolor}% With option pagecolor={somecolor or none}
+\usepackage[raggedright]{titlesec}
+	
+\titleformat{\part}
+  {\Huge\bfseries\color{white}}
+  {}
+  {0pt}
+  {\newpagecolor{thk_red}\thispagestyle{empty}\afterpage{\restorepagecolor}}
+
+\titleformat{\chapter}
+  {\bfseries\LARGE}
+  {}
+  {1px}
+  {\raggedright}
+  \titlespacing*{\chapter}{0cm}{0pt}{14pt}[0pt]
+
+
+
+\titleformat{\section}
+  {\singlespacing\large\bfseries\raggedright}
+  {\thesection}{1em}{\Large}
+  \titlespacing*{\section}{0pt}{0pt}{-\topskip/2}[0pt]
+
+\titleformat{\subsection}
+  {\bfseries\normalsize\raggedright}
+  {\thesection}{1em}{\normalsize}
+  \titlespacing*{\subsection}{0pt}{0pt}{-\topskip/2}[0pt]
+
+% Zeilenumbruch und Spacing fÃŒr AbsÃ€tze
+\titleformat{\paragraph}[hang]
+  {\singlespacing\normalfont\normalsize\bfseries}
+  {\theparagraph}{1pt}{}
+  
+\titlespacing*{\paragraph}{0pt}{3.25ex plus 1ex minus .2ex}{0.5em}
+
+
+%----------------------------------------------------
+% Packages for Module Table
+%----------------------------------------------------
+\usepackage{pdflscape}
+\usepackage{geometry}
+\usepackage{rotating}
+\usepackage{array}
+
+% Paket Positionierung von Grafiken
+\usepackage[export]{adjustbox}
+
+%Paket für deutsche Silbentrennung etc.
+%\usepackage{ngerman}
+
+%Paket für Zeichenkodierung, entspricht UTF-8
+\usepackage[utf8x]{inputenc}
+
+\usepackage{tocloft}
+\newcommand{\listfootnotesname}{Auflistung aller Fußnoten}% 'List of Footnotes' title
+\newlistof[chapter]{footnotes}{fnt}{\listfootnotesname}% New 'List of...' for footnotes
+\let\oldfootnote\footnote % Save the old \footnote{...} command
+\renewcommand\footnote[1]{% Redefine the new footnote to also add 'List of Footnote' entries.
+    \refstepcounter{footnotes}% Add and step a reference to the footnote/counter.
+    \oldfootnote{#1}% Make a regular footnote.
+    \addcontentsline{fnt}{footnotes}{\protect
+\numberline{\thefootnotes}#1}% Add the 'List of...' entry.
+}
+
+%Paket das die Ausgabefonts definiert
+%\usepackage[T1]{fontenc}
+
+
+
+
+\usepackage{mdframed}
+\newmdenv[
+  leftline=false,
+  bottomline=false,
+  rightline=false,
+  topline=false,
+  linewidth=1pt,
+  linecolor=thk_red!20,
+  innertopmargin=0pt,
+  innerbottommargin=4pt,
+  innerleftmargin=0,
+  skipabove=4pt,
+  skipbelow=0pt
+]{modulHead}
+
+%Paket für das Einbinden von Grafiken über die figure-Umgebung
+\usepackage{graphicx}
+\usepackage{grffile}
+
+\usepackage{float}
+
+\usepackage{mdframed}
+\newmdenv[
+  topline=false,
+  bottomline=false,
+  rightline=false,
+  linewidth=2pt,
+  linecolor=thk_red,
+  innertopmargin=14pt,
+  innerbottommargin=14pt,
+  backgroundcolor=black!5,
+  skipabove=\topsep,
+  skipbelow=\topsep
+]{siderules}
+
+%Paket für mehrseitige Tabellen
+\usepackage{longtable}
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+
+\usepackage{booktabs}
+
+%Paket zum \UTF{0192}ndern der Kopf- und Fußzeile
+\usepackage{fancyhdr}
+
+%Benutzt das Paket für eigenen Seitenstil
+\pagestyle{fancy}
+
+%Erzeugt eine Linie in der Kopfzeile (lässt sich mit 0.0pt ausblenden)
+\renewcommand*{\headrulewidth}{0.1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{thk_red}\leaders\hrule height \headrulewidth\hfill}}
+\lhead{} %Kopfzeile links
+
+%\chead{\thepage} %Kopfzeile mitte
+\chead{}
+\rhead{} %Kopfzeile rechts
+\lfoot{} %Fußzeile links
+\cfoot{} %Fußzeile mitte
+\rfoot{} %Fußzeile rechts
+\makeatother
+
+
+\newcommand{\changefont}{%
+    %\fontsize{9}{11}\selectfont
+}
+
+
+\setlength\headheight{0pt}
+\setlength\footheight{0pt}
+%\lfoot{\includegraphics[height=40pt]{../assets/box.pdf}}
+\rfoot{\thepage}
+\lfoot{\changefont Modulhandbuch | Master Digital Sciences | TH Köln}
+
+
+%\UTF{0192}ndert die Seitennummerierung beim Inhaltsverzeichnis mit eigenem Stil
+\renewcommand*{\indexpagestyle}{fancy}
+%Verhindert die Seitennummerierung auf den Part-Seiten
+\renewcommand*{\partpagestyle}{empty}
+%\UTF{0192}ndert die Seitennummerierung bei Chapter mit eigenem Stil
+\renewcommand*{\chapterpagestyle}{fancy}
+
+%Abbildungsnummerierung ändern (abhängig von chapter, z.B. Abbildung 1.1)
+\renewcommand*{\thefigure}{\thechapter.\arabic{figure}}
+%Tabellennummerierung ändern (abhängig von chapter, z.B. Tabelle 1.1)
+\renewcommand*{\thetable}{\thechapter.\arabic{table}}
+
+%Paket, um ein Glossar/Abkürzungsverzeichnis anzulegen
+\usepackage{nomencl}
+\let\abbrev\nomenclature
+%Der Name wird in Glossar geändert
+\renewcommand{\nomname}{Glossar}
+%Definiert die Aufteilung im Glossar zwischen Begriffen und Erläuterung
+\setlength{\nomlabelwidth}{.25\hsize}
+%Definiert die Punktelinien im Glossar
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
+\setlength{\nomitemsep}{-\parsep}
+%Veranlasst die Erstellung des Glossars
+\makenomenclature
+
+%Einrückungen nach Absätzen und Grafiken verhindern
+\setlength{\parindent}{0pt}
+
+%Verhindern, dass eine neue Seite für ein einzelnes Wort/Zeile verwendet wird
+\clubpenalty = 10000 % schliesst Schusterjungen aus
+\widowpenalty = 10000 % schliesst Hurenkinder aus (keine Beleidigung, sondern wirklich ein Fachbegriff)
+
+%Paket für ein deutsches Literaturverzeichnis
+\usepackage{bibgerm}
+
+%Paket für die Verwendung von URLs durch den Befehl \url{}
+\usepackage{url}
+
+%Paket für Zeilenabstand (onehalfspace, singlespace)
+\usepackage{setspace}
+
+%Paket zur Erzeugung von Anführungszeichen durch \enquote{Text}
+\usepackage[ngerman]{babel}
+\usepackage[babel, german=quotes]{csquotes}
+
+%Paket für farbigen Text
+%black,white,green,red,blue,yellow,cyan,magenta
+\usepackage{color}
+
+%Paket für farbigen Hintergrund für Verbatim-Umgebung (Quelltext-Umgebung)
+\usepackage{fancyvrb}
+\usepackage{verbatim,moreverb}
+%Grauton für Quelltext-Umgebung definieren 80% Grau
+\definecolor{sourcegray}{gray}{.80}
+%Paket für Quelltext-Umgebung
+\usepackage{listings}
+
+%Paket für Positionierung der Objekte ohne Float (Verwendungsbsp.: \begin{figure}[H])
+\usepackage{float}
+
+%Paket zur Erzeugung von Hyperrefs und PDF Informationen
+\usepackage[plainpages=false,pdfpagelabels,
+            pdftitle={Modulhandbuch | Master Digital Sciences | TH Köln},
+            pdfauthor={}
+            ]{hyperref}
+\hypersetup{
+    colorlinks = true,
+    allcolors = {thk_black}
+}
+
+
+\usepackage{pdfpages}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}
+  \setlength{\parskip}{0pt}
+}
+
+\usepackage{tabularx}
+%\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+%\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+%\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% URL
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[]{hyperref}
+
+% Sonderzeichen
+\usepackage{textcomp}
+\usepackage{eurosym}
+
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\parskip}{1em}
+
+% Wasserzeichen
+%\usepackage[printwatermark]{xwatermark}
+%\newwatermark[allpages,color=lightgray,angle=45,scale=3]{Arbeitsversion}
+
+
+
+
+
+\usepackage[font=footnotesize]{caption}
+
+\usepackage{enumitem}
+\setlist{leftmargin=1em}
+\setlist{parsep=0.3em}
+
+% Footer definieren
+\makeatletter
+\def\footrule{{
+  \vskip-\footruleskip\vskip-\footrulewidth
+  \color{\footrulecolor}
+  \hrule\@width\headwidth\@height
+  \footrulewidth\vskip\footruleskip
+}}
+\makeatother
+\renewcommand{\footrulewidth}{0.1pt}
+\newcommand{\footrulecolor}{thk_red}
+
+\newcommand*\rot{\rotatebox{90}}
+
+% required as seperator without taking space, dirty hack, sorry
+\newcommand*\foo{}
+
+% für maximale Tiefe Inhaltsverzeichnis
+\usepackage{tocvsec2}
+\setcounter{secnumdepth}{-1}
+
+% nach part neu zählen
+\makeatletter
+\@addtoreset{chapter}{part}
+\makeatother
+
+
+\begin{document}
+
+%=== Deckblatt =======================================================
+\include{coversheet}
+
+%=== Inhaltsverzeichnis ==============================================
+
+\maxtocdepth{section}
+\tableofcontents
+
+%=== Hauptteil =======================================================
+%Seitennummerierung des Hauptteils
+\mainmatter
+
+
+\include{content}
+
+%=== Schlussteil =====================================================
+%%Seitennummerierung für den Anhang
+\backmatter
+
+
+\end{document}

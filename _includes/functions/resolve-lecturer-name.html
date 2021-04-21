@@ -1,0 +1,33 @@
+{% comment %}
+Resolves the person acronym into a full name with faculty. Comes a long version (for module description) or a
+short version (for the module list)
+{% endcomment %}
+
+{% assign acronym = include.acronym | lstrip %}
+{% if site.data.people[acronym] %}
+    {% if acronym == "all" %}
+        {% if include.detailed %}
+            {% assign person_name = site.translations[site.lang].people.all_long %}
+        {% else %}
+            {% assign person_name = site.translations[site.lang].people.all_short %}
+        {% endif %}
+    {% else %}
+        {% if include.detailed %}
+            {% assign person_name = site.data.people[acronym].title |
+                    append: " " |
+                    append: site.data.people[acronym].firstname | append: " " |
+                    append: site.data.people[acronym].lastname |
+                    append: " (" |
+                    append: site.translations[site.lang].people.faculty |
+                    append: " " |
+                    append: site.data.people[acronym].faculty |
+                    append: ")" %}
+        {% else %}
+            {% assign person_name = site.data.people[acronym].lastname |
+                    append: " (" | append: site.data.people[acronym].faculty |
+                    append: ")" %}
+        {% endif %}
+    {% endif %}
+{% else %}
+    {% assign person_name = "*** FEHLER: Person '" | append: acronym | append: "' existiert nicht ***" %}
+{% endif %}

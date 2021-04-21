@@ -1,0 +1,68 @@
+---
+layout: default
+---
+
+<section class="section">
+    <div class="container">
+        <div class="content">
+
+            <h1>Wie erstelle oder ändere ich eine Modulbeschreibung?</h1>
+
+            Es gibt zwei Optionen zum Editieren:
+            <ol>
+                <li>Repo von <a href="https://git.st.archi-lab.io/master/master-digital-science">
+                    https://git.st.archi-lab.io/master/master-digital-science</a> clonen und dann im Texteditor
+                    editieren.
+                </li>
+                <li>
+                    Mittels des "Bearbeiten" Links in der Modulbeschreibung direkt im Web-Interface von
+                    Gitlab editieren. Geht auch gut, wenn man nur textuelle Änderungen vornimmt. Aber
+                    <b>Achtung, Session Timeouts!</b>
+                </li>
+            </ol>
+
+            Wenn man die Änderungen committed hat, braucht es serverseitig ca. 3 min, bis die Seite neu
+            generiert ist (aus technischen Gründen werden alle Jekyll-Libs immer neu geladen).
+            Das passiert automatisch durch einen Webhook, man braucht also nichts weiter tun.
+
+
+            <h1>Formatbeschreibung der Modul-Informationen</h1>
+
+            <p>Die Modulbeschreibungen werden aus den Markdown (*.md) Files im Verzeichnis "_modules" zusammengebaut.
+            Diese Markdown-Files haben einen <b>Front-Matter-Block</b>, der nachfolgend beispielhaft dargestellt ist. Alle
+            Front-Matter-Elemente sind unten detailliert dokumentiert.</p>
+
+            <p>Darüber hinaus gibt es einen <b>Inhaltsteil</b>, den du freier gestalten kannst. Die vorgeschlagenen
+            Mindestinformationen sind ebenfalls aus dem Beispiel zu entnehmen.</p>
+
+            <p>
+            <div class="language-plaintext">
+                <pre><code>
+{% include_relative /_blueprints/modulbeschreibung.md %}
+                </code></pre>
+            </div>
+            </p>
+
+
+            <h1>Front-Matter-Kategorien für Module</h1>
+
+            {% for item in site.translations["de"].modules %}
+                {% if item[0] != "content" %}
+                    {% include /functions/print-category-documentation.html category=item %}
+                {% endif %}
+            {% endfor %}
+
+
+            <h1>Freie Inhalte der Modulbeschreibung</h1>
+
+            <p>{{ site.translations["de"].modules.content.doc }}</p>
+            {% for item in site.translations["de"].modules.content %}
+                {% if item[0] != "trans" and item[0] != "doc"  %}
+                    {% include /functions/print-category-documentation.html category=item %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+    </div>
+</section>

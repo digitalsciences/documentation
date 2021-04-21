@@ -1,0 +1,279 @@
+#-------------------
+branding:
+  # This part is needed for providing individual entry points for all study programs. It was the easiest way
+  # to provide this via the localization plugin. The file name denotes the study program: "de.yml" and "en.yml"
+  # stand for the Master as the "umbrella", the others (like "dsar.yml", "esar.yml" etc.) for the study programs.
+  # As of now, there are only two things that actually are branded: The header color, and the header text.
+  header_color: "#C90C0F"
+  #header_color: "#7F7F7F"
+  header_title: Master Digital Sciences
+  header_subtitle: Documents for Study Program Accreditation
+  switch_to_de:
+  switch_to_en: "/en"
+  lang_discriminator: "/en"
+#-------------------
+global:
+  name: Master Digital Sciences
+  description: Documents for Study Program Accreditation
+  specialization: Specialization within Master Digital Sciences
+  edit: Edit
+  tbd: tbd.
+  with: with
+  module_list_disclaimer: <b>Please note</b> - module list is still in discussion and not yet complete. A module is missing?
+    Please contact the appropriate member of the development team directly.
+  reference_contact_list: See contact list on start page.
+  error: Error
+  warning: Warning
+  info: Information
+  ok: all ok
+
+#-------------------
+people:
+  all_long: All professors in the study program
+  all_short: All professors
+  acronym: Acronym
+  modules: Modules
+  fullname: Name
+  lecturers: Lecturers
+  faculty: Faculty
+#-------------------
+main_menu:
+  start: Start
+  document: Documents
+  specializations: Specialization
+  focus_areas: Focus Areas
+  exam_types: Exam Types
+  lecturers: Lecturers
+  module_reference: Module Reference
+  examination_regulations: Examination Regulations (draft version)
+  graduate_profiles: Graduate Profiles
+  study_schedule: Study Schedule
+  modules: Modules
+#-------------------
+footer:
+  content-developer-documentation: Documentation for study program developers and lecturers (e.g. how to describe modules, etc.)
+  repo: Gitlab repository for this web site (login required)
+  imprint: Imprint (in German)
+  disclaimer: Disclaimer (in German)
+  privacy: Privacy (in German)
+#-------------------
+exams:
+  examtypes: Examination Types
+  form: Type
+  acronym: Acronym
+  description: Description
+  explanation: In the table below, you find the examination types used in the Master modules.
+  exam_combination_overview: Combination
+  exam_combination_details: Combination of several exam types
+  tbd: tbd.
+  unclear: ???
+#-------------------
+studyprograms:
+  heading_alumni_profiles: Alumni Profiles and Example Curricula
+  term: Term
+  module: Module
+  acronym: Acronym
+  curriculum_intro: >
+    Below, you find a number of alumni profiles with their specific example curricula.
+  heading_example_curriculum: Example Curriculum
+  heading_example_curriculum_explanation: >
+    The subsequent table contains an example curriculum for this alumnus profile.
+  subtotal: Subtotal
+  total: Total
+
+#-------------------
+moduledescription:
+  module: Module
+  errors_warnings_header: Errors, Warnings, Information
+  errors_warnings_description: This site is currently under development. Therefore, errors, warnings, and additional
+    information for the responsible lecturer are shown below. In productive mode, these messages will be
+    hidden.
+  organizational_details_header: Organizational Details
+  contribution_to_focus_areas_header: Mapping to Focus Areas
+  contribution_to_focus_areas_description: Below, you find the module's mapping to the study program's
+    focus areas. This is done as a contribution to all relevant focus areas (in ECTS, and content-wise).
+    This is also relevant for setting the module in relation to other modules, and tells to what extent
+    the module might be part of other study programs.
+  focus_area: Focus Area
+  ects_proportional: ECTS (prop.)
+  contribution: Module Contribution to Focus Area
+  duration_unit: Semester
+  none: none
+  total_effort: Total effort
+  contact_time: Total contact time
+  self_learning_time: Time for self-learning
+  containing: containing
+  responsible_for_module: Responsible for Module
+  no_participant_restriction: no restrictions
+  learning_outcome: Learning Outcome
+  modulecontent: Module Content
+  teaching_learning_forms: Forms of Teaching and Learning
+  learning_material: Learning Material Provided by Lecturer
+  literature: Literature
+  thesis_contribution_to_focus_areas: Contribution depends on topic
+  individual_work: Individual work
+  thesis_and_colloquium: Thesis and colloquium
+#
+#----------------------------------------------
+# Modul-Dokumentation (Front-Matter-Kategorien)
+#----------------------------------------------
+# Dieser Abschnitt des Language Files dient auch dazu, die Dokumentation für die (Studiengangs-)Developer zu
+# generieren. Daher muss die folgende Standard-Struktur eingehalten werden:
+#     category:  <wie im Front Matter der Modulbeschreibung, kein String!>
+#       trans: <Übersetzung der Kategorie
+#       doc: <Dokumentierende Beschreibung für die Studiengangs-Entwicklerin. Taucht nur im Doku-File auf.>
+#       options: <kein String! Nur falls es Auswahloptionen gibt, wie bei Sprache oder "angeboten SS/WS".
+#         opt1: <übersetzter Langtext zu opt1>
+#         opt2: <übersetzter Langtext zu opt2>
+#       options_doc: <kein String! Nur falls es Auswahloptionen gibt.
+#         opt1: <Dokumentation für opt1>
+#         opt2: <Dokumentation für opt2>
+#
+modules:
+  type:
+    trans: Type
+  #
+  acronym:
+    trans: Acronym
+  #
+  title:
+    trans: Title
+  #
+  abstract:
+    trans: abstract
+  #
+  is_thesis:
+    trans: This is the Master Thesis
+    ects_thesis:
+      trans: ECTS for thesis
+    ects_colloquium:
+      trans: ECTS for colloquium
+  #
+  responsible:
+    trans: Lecturer(s)
+    module_management:
+      trans: Responsible for the module
+    lecturers:
+      trans: Lecturer(s)
+  #
+  status:
+    trans: Status
+    doc: Status of module description (to what extent has the descreption been finalized, discussed, and decided)
+    options:
+      ok: ok
+      in_discussion: draft
+      required: need exists, realization unclear
+      lo_ok_but_wrong_format: Learning Outcome seems ok, but has wrong format
+      lo_nok: Learning Outcome not ok
+    options_doc:
+      ok: >
+        All ok - Module content has been discussed and decided, description is in the right format,
+        responsible lecturer exists and has given a commitment.
+      in_discussion: >
+        In discussion - either module content hasn't been fully clarified, or responsible lecturer
+        is not clear yet, or both.
+      required: >
+        There is a need for this from a curriculum or graduate profile perspective, but (as of now)
+        no way to include this module into our module catalogue.
+      lo_ok_but_wrong_format: >
+        Learning Outcome seems ok, but has wrong format (not in WAS - WIE - WOZU format)
+      lo_nok: >
+        Learning Outcome not ok (cannot be converted in WAS - WIE - WOZU format, but needs to be rewritten)
+  #
+  language:
+    trans: Language
+    options:
+      de: German
+      en: English
+      de_or_en: English (in case of intern. part.)
+      de_and_en: Both in German and in English
+  #
+  semester:
+    trans: Offered in
+    options:
+      ws: Winter Semester
+      ss: Summer Semester
+      ss_ws: Each Semester
+      ws_opt: Winter Semester (if sufficient lecturer capacity available)
+      ss_opt: Summer Semester (if sufficient lecturer capacity available)
+      ss_ws_opt: Each Semester (if sufficient lecturer capacity available)
+  #
+  duration:
+    trans: Duration
+  #
+  location:
+    trans: Location
+    options:
+      gm: Campus Gummersbach, or remote
+      kdeutz: Campus Köln Deutz, or remote
+      ksued: Campus Köln Süd, or remote
+      kmh: Campus Köln Mülheim (Code & Context), or remote
+      remote: Remote
+      all_sites: At all locations, or remote
+  #
+  participants:
+    trans: Number of participants
+    min:
+      trans: minimum
+    max:
+      trans: maximum
+  #
+  ects:
+    trans: ECTS
+    total_ects:
+      trans: Total ECTS
+    contributions_to_focus_areas:
+      trans: Contribution to Focus Areas (in ECTS)
+      gak:
+        num:
+          trans: GAK
+        desc:
+          trans: Brief description for GAK
+      acs:
+        num:
+          trans: ACS
+        desc:
+          trans: Brief description for ACS
+      eb:
+        num:
+          trans: EB
+        desc:
+          trans: Brief description for EB
+      dip:
+        num:
+          trans: DIP
+        desc:
+          trans: Brief description for DIP
+      mri:
+        num:
+          trans: MRI
+        desc:
+          trans: Brief description for MRI
+  #
+  exam:
+    trans: Exam
+  #
+  precondition:
+    trans: Precondition
+  #
+  recommendation:
+    trans: Recommendation
+  #
+  effort:
+    trans: Effort
+    lecture:
+      trans: lecture
+    seminar:
+      trans: seminar
+    practical:
+      trans: practical
+    exercise:
+      trans: exercise
+    project_supervision:
+      trans: project supervision
+    project_work:
+      trans: self-organized project work
+    sws_lecturer:
+      trans: SWS im Lehrerhebungsbogen
+  ignore:
+    trans: Ignore list

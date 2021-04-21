@@ -1,0 +1,22 @@
+{% assign module = include.mymodule %}
+
+{% assign participants_info = site.translations[site.lang].moduledescription.no_participant_restriction %}
+
+{% if module.participants.min == 1 and module.participants.max == 1 %}
+    {% assign participants_info = site.translations[site.lang].moduledescription.individual_work %}
+{% else %}
+    {% if module.participants %}
+        {% assign boundary_list = "" | split: ";" %}
+        {% if module.participants.min %}
+            {% assign boundary = site.translations[site.lang].modules.participants.min.trans
+                | append: " " | append: module.participants.min %}
+            {% assign boundary_list = boundary_list | push: boundary %}
+        {% endif %}
+        {% if module.participants.max %}
+            {% assign boundary = site.translations[site.lang].modules.participants.max.trans
+                | append: " " | append: module.participants.max %}
+            {% assign boundary_list = boundary_list | push: boundary %}
+        {% endif %}
+        {% assign participants_info = boundary_list | join: ", " %}
+    {% endif %}
+{% endif %}

@@ -1,0 +1,10 @@
+{% assign mod_lang = include.mymodule.language | split: "." | last %}
+
+{% assign page_language = site.lang %}
+{% if mod_lang %}
+	{% if mod_lang != "de" %}
+		{% assign page_language = "en" %}
+	{% else %}
+		{% assign page_language = "de" %}
+	{% endif %}
+{% endif %}

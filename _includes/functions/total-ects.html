@@ -1,0 +1,17 @@
+{% comment %} Calculates the total ECTS for a module based on the contributions to the Handlungsfelder {% endcomment %}
+{% assign module = include.mymodule %}
+{% assign total_ects = 0 %}
+
+{% if module.is_thesis %}
+    {% assign total_ects = module.is_thesis.ects_thesis | plus: module.is_thesis.ects_colloquium %}
+{% else %}
+    {% if module.ects.contributions_to_focus_areas %}
+         {% for contrib in module.ects.contributions_to_focus_areas %}
+            {% assign total_ects = total_ects | plus: contrib[1].num %}
+         {% endfor %}
+    {% elsif module.ects.total_ects %}
+        {% assign total_ects = module.ects.total_ects %}
+    {% else %}
+        {% assign total_ects = site.translations[site.lang].global.tbd }} %}
+    {% endif %}
+{% endif %}

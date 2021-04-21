@@ -1,0 +1,67 @@
+---
+layout: default
+---
+
+{% assign people = site.data.people %}
+
+<section class="section">
+  <div class="container">
+    <h1 class="title is-1">{% t people.lecturers %}</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="content is-tab-wrap">
+
+      <table class="table is-tab-content">
+        <thead>
+          <tr>
+            <th width="10%">{% t people.acronym %}</th>
+            <th width="25%">{% t people.fullname %}</th>
+            <th width="10%">{% t people.faculty %}</th>
+            <th width="55%">{% t people.modules %}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lecturer in people %}
+            <tr>
+              <td>{{ lecturer[0] }}</td>
+              <td>
+                {% assign _acronym=lecturer[0] %}
+                {% include /functions/resolve-lecturer-name.html acronym=_acronym detailed="true" %}
+                {{ person_name }}
+                </td>
+              <td>{{ lecturer[1].faculty }}</td>
+              <td>
+                {% assign modules_for_lecturer = "" | split: "." %}
+                {% assign all_modules = site.modules | where_exp: "item", "item.abstract != 1" %}
+                {% for module in all_modules  %}
+                  {% assign responsible_list = module.responsible.module_management | split: ";" %}
+                  {% if module.responsible.lecturers %}
+                    {% assign lecturer_list = module.responsible.lecturers | split: ";" %}
+                    {% assign responsible_list = responsible_list | concat: lecturer_list %}
+                  {% endif %}
+                  {% if responsible_list contains lecturer[0] %}
+                    {% if site.developer %}
+                      {% include /functions/find-module-errors.html mymodule=module formatting="short" %}
+                    {% else %}
+                      {% assign err_warn_flags = "" %}
+                    {% endif %}
+                    {% capture item %}{{ err_warn_flags }} &nbsp;<a href="{{ site.baseurl }}/{{ module.url }}">{{ module.title }}</a>
+                    ({{ module.acronym }})
+                    {% endcapture %}
+                    {% assign modules_for_lecturer = modules_for_lecturer | push: item %}
+                  {% endif %}
+                {% endfor %}
+                {% if modules_for_lecturer.size > 0 %}
+                  {{ modules_for_lecturer | join: "<br>" }}
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+{% assign kompetenzbereiche=site.kompetenzbereiche %}
+{% assign handlungsfelder=site.handlungsfelder %}
+
+<section class="section">
+  <div class="container">
+    <div class="content">
+      <h1>Kompetenzcluster</h1>
+    </div>
+    {% include /partials/toc.html items=kompetenzbereiche %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="content">
+      {% for kompetenzbereich in kompetenzbereiche%}
+      {% if kompetenzbereich.path contains '-intro.md' %}
+      {% include /partials/intro.html item=kompetenzbereich %}
+      {% else %}
+      {% include /partials/child-content.html item=kompetenzbereich parent=handlungsfelder %}
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

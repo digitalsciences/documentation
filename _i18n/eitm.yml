@@ -1,0 +1,12 @@
+#-------------------
+branding:
+  # This part is needed for providing individual entry points for all study programs. It was the easiest way
+  # to provide this via the localization plugin. The file name denotes the study program: "de.yml" and "en.yml"
+  # stand for the Master as the "umbrella", the others (like "dsar.yml", "esar.yml" etc.) for the study programs.
+  # As of now, there are only two things that actually are branded: The header color, and the header text.
+  header_color: "#0076C0"
+  header_title: IT Management (ITM)
+  header_subtitle: Specialization within Master Digital Sciences
+  switch_to_de: "/ditm"
+  switch_to_en: "/eitm"
+#-------------------

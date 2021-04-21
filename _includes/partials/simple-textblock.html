@@ -1,0 +1,7 @@
+{% assign item = include.item %}
+
+<div class="simple-textblock">
+<h2 id="{{item.id | slugify}}">{{item.title}} <a href="{{{site.edit-base}}{{ item.path }}{{site.edit-params}}"><span class="icon"><i class="fa fa-edit"></i></span> Bearbeiten</a></h2>
+
+{{item.content}}
+</div>

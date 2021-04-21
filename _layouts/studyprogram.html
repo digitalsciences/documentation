@@ -1,0 +1,169 @@
+---
+layout: default
+---
+
+<section class="section modulfacts" xmlns:text-align="http://www.w3.org/1999/xhtml">
+
+  <div class="container">
+    <div class="content">
+      <div class="columns">
+        <div class="column is-8">
+          <h1>{{ page.title }} ({{ page.kuerzel }})</h1>
+          <b><i>{% t global.specialization %}</i></b>
+        </div>
+        <div class="column is-4 has-text-right">
+          <a target="_blank" href="{{site.edit-base}}{{ page.path }}"><span class="icon"><i class="fa fa-edit"></i></span>
+            Bearbeiten</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section modulbeschreibung">
+  <div class="container">
+    <div class="content">
+      <p>{{ page.abstract }}</p>
+      {{ content }}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="content is-tab-wrap">
+
+      <h2>{% t studyprograms.heading_alumni_profiles %}</h2>
+
+      {% assign studyprogram_competence = site.studyprogram_competences
+            | where_exp: "spc", "spc.studyprogram == page.kuerzel" | first %}
+
+      {{ studyprogram_competence.content | markdownify }}
+
+
+
+      {% assign specific_personas = site.personas
+            | where_exp: "persona", "persona.program == page.kuerzel"
+            | sortby: "acronym" %}
+      {% include /functions/get-lang.html %}
+
+      <p>{% t studyprograms.curriculum_intro %}</p>
+      <div class="toc">
+        <ol class="menu-list">
+          {% for persona in specific_personas %}
+          <li><a href="#{{persona.acronym | slugify}}">{{ persona.title[current_language] }}</a></li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      {% for persona in specific_personas %}
+
+        <h3 id="{{ persona.acronym }}">{{ persona.title[current_language] }}</h3>
+
+        {{ persona.content }}
+
+        <p>{% t studyprograms.heading_example_curriculum_explanation %}</p>
+
+        <table>
+          <thead>
+          <tr>
+            <th colspan="4">&nbsp;&nbsp; </th>
+            <th colspan="6">{% t moduledescription.contribution_to_focus_areas_header %}</th>
+          </tr>
+          <tr>
+            <th width="15%">{% t studyprograms.term %}</th>
+            <th width="8%">{% t studyprograms.acronym %}</th>
+            <th width="30%">{% t studyprograms.module %}</th>
+            <th width="7%">ECTS</th>
+            {% for handlungsfeld in site.handlungsfelder %}
+            <th width="5%"><a href="{{site.baseurl}}/#{{ handlungsfeld.id | slugify }}">
+              {{ handlungsfeld.kuerzel | upcase }}</a></th>
+            {% endfor %}
+          </tr>
+          </thead>
+          <tbody>
+            {% comment %} *** VERY complicated to sum up credits in Liquid ... *** {% endcomment %}
+            {% assign all_ects = 0 %}
+            {% assign semester_ects = 0 %}
+            {% assign all_contribs = "" | split: ";" %}
+            {% assign semester_contribs = "" | split: ";" %}
+            {% for index in (0..5) %}
+              {% assign all_contribs = all_contribs | push: 0 %}
+              {% assign semester_contribs = semester_contribs | push: 0 %}
+            {% endfor %}
+
+            {% include /functions/const-focus-area-order.html %}
+            {% assign focus_areas_acronyms = focus_area_order | split: ";" %}
+
+            {% assign semester_nr = 0 %}
+            {% for semester_plan in persona.modules %}
+              {% assign semester_nr = semester_nr | plus: 1 %}
+
+              {% assign module_nr = 0 %}
+              {% for acronym in semester_plan[1] %}
+                {% assign module_nr = module_nr | plus: 1 %}
+                {% assign current_module = site.modules | where_exp: "mod", "mod.acronym == acronym" | first %}
+                {% include /functions/semester-string-in-example-curriculum.html mysemester_nr=semester_nr mymodule_nr=module_nr  starts_in=current_module.starts_in %}
+                <tr>
+                  <td>{{ semester_string }}</td>
+                  <td>{{ acronym }}</td>
+                  <td><a href="{{site.baseurl}}/{{current_module.url}}">{{current_module.title}}</td>
+                  {% include /functions/total-ects.html mymodule=current_module %}
+                  <td>{{ total_ects }}</td>
+                  {% include /functions/print-contributions-table-cells-web.html mymodule=current_module %}
+                </tr>
+
+                {% comment %} Calc / print a sum for each semester {% endcomment %}
+                {% if semester_nr < persona.modules.size %}
+                  {% assign all_ects = all_ects | plus: total_ects %}
+                  {% assign semester_ects = semester_ects | plus: total_ects %}
+
+                  {% assign tmp_contribs = "" | split: ";" %}
+                  {% for index in (0..5) %}
+                    {% assign focus_areas_acronym = focus_areas_acronyms[index]  %}
+                    {% assign credits = semester_contribs[index]
+                        | plus: current_module.ects.contributions_to_focus_areas[focus_areas_acronym].num %}
+                    {% assign tmp_contribs = tmp_contribs | push: credits %}
+                  {% endfor %}
+                  {% assign semester_contribs = tmp_contribs %}
+
+                  {% if module_nr == semester_plan[1].size %}
+                    <tr>
+                      <td colspan="2">&nbsp;&nbsp; </td>
+                      <td style="text-align:right;color:#7a7a7a;font-weight:bold;">{% t studyprograms.subtotal %}</td>
+                      <td style="font-weight:bold;color:#7a7a7a;background-color:#e3e3e3">{{ semester_ects }}</td>
+                      {% for cell in semester_contribs %}
+                        <td style="font-weight:bold;color:#7a7a7a;background-color:#e3e3e3">{{ cell }}</td>
+                      {% endfor %}
+                    </tr>
+
+                    {% comment %} *** add the "all_contribs", reset the semester values *** {% endcomment %}
+                    {% assign semester_ects = 0 %}
+                    {% assign tmp_contribs = all_contribs %}
+                    {% assign all_contribs = "" | split: ";" %}
+                    {% for index in (0..5) %}
+                      {% assign credits = tmp_contribs[index] | plus: semester_contribs[index] %}
+                      {% assign all_contribs = all_contribs | push: credits %}
+                    {% endfor %}
+                    {% assign semester_contribs = "" | split: ";" %}
+                    {% for index in (0..5) %}{% assign semester_contribs = semester_contribs | push: 0 %}{% endfor %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+            <tr>
+              <td colspan="2">&nbsp;&nbsp; </td>
+              <td style="text-align:right;color:#7a7a7a;font-weight:bold;">{% t studyprograms.total %}</td>
+              <td style="font-weight:bold;color:#7a7a7a;background-color:#e3e3e3">{{ all_ects | plus: 30 }}</td>
+              {% for cell in all_contribs %}
+              <td style="font-weight:bold;color:#7a7a7a;background-color:#e3e3e3">{{ cell }}</td>
+              {% endfor %}
+            </tr>
+          </tbody>
+        </table>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
