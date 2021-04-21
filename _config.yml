@@ -13,7 +13,13 @@ avatar: https://raw.githubusercontent.com/th-koeln/mi-2017/master/images/box.png
 
 # Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
 # Used for Sitemap.xml and your RSS feed
-url: https://git.st.archi-lab.io/master/master-digital-science
+# url: https://git.st.archi-lab.io/master/master-digital-science
+url: https://digitalsciences.github.io
+#baseurl: "http://master.pages.st.archi-lab.io/master-digital-science"
+baseurl:
+# bitte nicht ändern, für die Lokalisierung nötig - muss gleicher Wert wie baseurl sein!
+baseurl_absolute: "http://master.pages.st.archi-lab.io/master-digital-science"
+
 
 # Basis URL zum Editieren im Repo
 edit-base: https://git.st.archi-lab.io/master/master-digital-science/edit/master/
@@ -24,9 +30,7 @@ edit-params: ?useDefaultHandler=true
 # and NOT your User repository (http://yourusername.github.io)
 # then add in the baseurl here, like this: "/repository-name"
 #bitte base url root lassen<-- Für Dokku!!
-baseurl: "http://master.pages.st.archi-lab.io/master-digital-science"
-# bitte nicht ändern, für die Lokalisierung nötig - muss gleicher Wert wie baseurl sein!
-baseurl_absolute: "http://master.pages.st.archi-lab.io/master-digital-science"
+
 
 # Debug-Flag, shows some information only need when developing new content
 developer: true
@@ -62,6 +66,7 @@ kramdown:
 # Set the Sass partials directory, as we're using @imports
 sass:
   style: :expanded # You might prefer to minify using :compressed
+  sass_dir: ./_sass
 
 # Use the following plug-ins
 plugins: ['jekyll/scholar', jekyll-multiple-languages-plugin]
