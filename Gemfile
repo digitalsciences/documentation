@@ -3,6 +3,8 @@ source "https://rubygems.org"
 # Ruby Requirement
 # ruby '2.2.1'
 
+gem "github-pages", group: :jekyll_plugins
+
 # Gem Requirements
 gem "jekyll-feed"
 gem "jekyll-sitemap"
